@@ -1,0 +1,25 @@
+<ion-card [ngStyle]="{'background-color': metric.growth < 1 ? '#ffeaea' : (metric.growth >= 10 && metric.growth <= 40 ? '#fff8d9' : metric.backgroundColor || '#72e9c5')}">
+  
+  <ion-card-content>
+    <div class="card-header">
+      <h3>{{ metric.title }}</h3>
+      <div class="card-header">
+        <ion-icon [name]="getIcon(metric.growth, metric.icon)"></ion-icon>
+        <ion-text>{{ getGrowthLabel(metric.growth) }}</ion-text>
+      </div>
+    </div>
+
+    <h2 class="cost">
+      <ng-container *ngIf="isSpecialTitle(metric.title); else normalValue">
+        <ng-container *ngIf="metric.value < 1">No Value</ng-container>
+        <ng-container *ngIf="metric.value >= 1 && metric.value <= 10">Low Value</ng-container>
+        <ng-container *ngIf="metric.value > 10">KES {{ metric.value | number:'1.2-2' }}</ng-container>
+      </ng-container>
+      <ng-template #normalValue>{{ metric.value }}</ng-template>
+    </h2>
+
+    <p class="growth" [ngClass]="getGrowthClass(metric.growth)">
+      {{ metric.growth }}% than last month
+    </p>
+  </ion-card-content>
+</ion-card>

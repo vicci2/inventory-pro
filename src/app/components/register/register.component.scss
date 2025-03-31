@@ -1,0 +1,8 @@
+.active{
+    border: 2px solid var(--ion-color-primary);
+    color: var(--ion-color-primary);
+    background: transparent;
+    ion-icon{
+        color: var(--ion-color-primary);
+    }
+}

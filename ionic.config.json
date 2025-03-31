@@ -1,0 +1,7 @@
+{
+  "name": "inventoryPro",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

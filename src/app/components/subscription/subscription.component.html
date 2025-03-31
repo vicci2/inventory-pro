@@ -1,0 +1,171 @@
+<ion-grid>
+  <!-- Payment Form -->
+  <section>    
+    <!-- Header Section -->
+    <ion-row class="ion-justify-content-evenly ion-align-items-center" id="subscription">
+      <ion-col size="auto">
+        <fieldset class="ion-justify-content-between ion-padding-horizontal ion-margin">
+          <legend class="ion-text-center">Manage Subscription</legend>
+          <ion-buttons>
+            <ion-button color="tertiary" aria-label="Upgrade Subscription" (click)="toggleTiers()">
+              <ion-icon name="arrow-up-circle-outline" slot="start"></ion-icon>
+              <ion-label>Upgrade</ion-label>
+            </ion-button>
+            <ion-button color="warning" aria-label="Downgrade Subscription" (click)="toggleTiers()">
+              <ion-icon name="arrow-down-circle-outline" slot="start"></ion-icon>
+              <ion-label>Downgrade</ion-label>
+            </ion-button>
+          </ion-buttons>                   
+        </fieldset>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <!-- Payment Details Section (Updated for Subscription) -->
+      <ion-col size="12" size-lg="8" size-md="12">
+        <ion-card>
+          <ion-card-header class="top ion-justify-content-between">
+            <ion-card-title>{{ selectedTier?.name }}
+              <ion-card-subtitle class="ion-text-muted ion-text-bold">
+                Ksh {{selectedTier?.amount}}     
+              </ion-card-subtitle>
+              <ion-card-subtitle>Subscription Status: {{activeSubscription?.status}}</ion-card-subtitle>
+            </ion-card-title>
+            <ion-buttons *ngIf="activeSubscription?.status === 'active'">
+              <ion-button color="danger" aria-label="Unsubscribe" shape="round">
+                <ion-icon name="close-circle-outline" slot="start"></ion-icon>
+                <ion-label>Unsubscribe</ion-label>
+              </ion-button>
+            </ion-buttons>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-title>Accompanying Features            <ion-card-subtitle>{{selectedTier?.description}}</ion-card-subtitle></ion-card-title>
+            <ion-list lines="none">
+              <ion-row  class="ion-justify-content-center ion-align-items-center">
+                <ion-col size="6"  sizeLg="6" sizeMd="12" sizeSm="12" sizeXs="12"   *ngFor="let feature of selectedTier?.features">
+                  <ion-item>
+                    <ion-label>
+                      <h6>{{ feature.name }}</h6>
+                      <p>{{ feature.description }}</p>
+                    </ion-label>
+                    <h6 class="text-success">Ksh {{feature.cost}}</h6>
+                  </ion-item>
+                  <!-- <ion-button  expand="block" fill="outline" >
+                    <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+                    <ion-label>Add Feature</ion-label>
+                  </ion-button> -->
+                </ion-col>
+
+              </ion-row>
+              <ng-container  *ngFor="let feature of selectedTier?.features">
+              </ng-container>
+            </ion-list>
+            
+            <!-- Payment Methods -->
+            <ion-list lines="none">
+              <ion-radio-group>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-item lines="none">
+                        <ion-radio slot="start" value="visa"></ion-radio>
+                        <ion-label>PAYBILL</ion-label>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-item lines="none">
+                        <ion-radio slot="start" value="mastercard" checked></ion-radio>
+                        <ion-label>STK PUSH</ion-label>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-radio-group>
+            </ion-list>        
+
+            <!-- Proceed Button -->
+            <ion-button color="success" fill="outline" aria-label="Renew Subscription" expand="block" (click)="subscribe()">
+              <ion-icon name="refresh-outline" slot="start"></ion-icon>{{activeSubscription?.status === 'active'? 'Renew' : 'Activate'}}</ion-button>           
+          </ion-card-content>
+        </ion-card>
+
+        <ion-popover [isOpen]="isPopoverOpen" [backdropDismiss]="false">
+          <ng-template>
+            <div class="popover-header">
+              <h4>Subscribe</h4>
+              <ion-button fill="clear" size="small" (click)="isPopoverOpen = false" slot="end">
+                <ion-icon name="close-circle-outline"></ion-icon>
+              </ion-button>
+            </div>
+            <form [formGroup]="subscriptionForm" class="ion-padding"  (ngSubmit)="subscribe()">
+              <ion-input formControlName="transaction_code"                  label="Transaction Code" label-placement="floating"
+              fill="outline" type="text" [errorText]="validationService.getErrorMessage(subscriptionForm.get('transaction_code'))" placeholder="Enter Code">
+              <ion-icon slot="end" name="key" color="primary"></ion-icon>
+            </ion-input>      
+            <ion-button expand="full" shape="round" fill="outline" type="submit" [disabled]="!subscriptionForm.valid">Subscribe</ion-button>
+            </form>
+          </ng-template>
+        </ion-popover>
+      </ion-col>
+    
+      <!-- Order Recap Section (Updated for Subscription Tiers) -->
+      <ion-col size="10" size-lg="4" size-md="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Transaction Recap</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list lines="none">
+              <ion-item>
+                <ion-label>Selected Subscription Plan</ion-label>
+                <ion-note slot="end">{{ selectedTier?.name }}</ion-note>
+              </ion-item>
+              <ion-item>
+                <ion-label>Contracted Price</ion-label>
+                <ion-note slot="end">Ksh {{ selectedTier?.amount}}</ion-note>
+              </ion-item>            
+              <ion-item>
+                <ion-label>Features Included</ion-label>
+                <ion-note slot="end">{{ selectedTier?.features.length }}</ion-note>
+              </ion-item>            
+              <ion-item>
+                <ion-label><strong>Total</strong></ion-label>
+                <ion-note slot="end" color="success"><strong>{{ selectedTier?.amount }}</strong></ion-note>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    
+  </section>
+
+<!-- Tiers Tiles -->  
+<section class="ion-padding" *ngIf="showTiers">
+  <ion-row class="ion-justify-content-center ion-align-items-center" id="tiers">
+    <ng-container *ngFor="let tier of tiers">
+      <ion-col *ngIf="tier.name !== selectedTier?.name" 
+               size="10" sizeLg="4" sizeMd="6" sizeSm="10" sizeXs="12">
+        <ion-card [ngClass]="{'tier-card': true, 'basic': tier.name.includes('Basic'), 'standard': tier.name.includes('Standard'),  'pro': tier.name.includes('Pro'), 'business': tier.name.includes('Business'), 'enterprise': tier.name.includes('Enterprise')}">
+          <ion-card-header>
+            <ion-card-title>{{ tier.name }}</ion-card-title>
+            <ion-card-subtitle>{{ tier.description }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ul>
+              <li *ngFor="let feature of tier.features">
+                {{ feature.name }} - {{ feature.description }}
+              </li>
+            </ul>
+            <ion-button expand="block" [color]="getButtonColor(tier.name)" fill="outline" (click)="selectTier(tier)">
+              Select Plan
+            </ion-button>            
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ng-container>
+  </ion-row>
+</section>
+
+</ion-grid>
+  

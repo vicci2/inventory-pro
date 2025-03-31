@@ -1,0 +1,69 @@
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row class="ion-justify-content-evenly ion-padding-horizontal ion-margin-horizontal">
+      <ion-col size="7">
+        <app-search-filter [data]="stockData" 
+        [entityType]="'stock'" 
+        [searchKey]="'product_name'"
+        [displayKey]="'product_name'"
+        (filteredResults)="filteredData = $event"
+        (addEntity)="openAddInventoryModal()"></app-search-filter>
+      </ion-col>
+      <ion-col size="auto" class="ion-justify-content-evenly ion-align-content-center ion-padding">
+        <ion-button id="stock-up-modal" fill="clear" [routerLink]="['/stock/create']">
+          <ion-icon slot="start" name="add-circle"></ion-icon>Item
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center ion-align-content-center">
+      <ion-col size="3" sizeMd="3" sizeSm="4" sizeLg="2" sizeXs="6" *ngFor="let metric of metrics">
+        <app-widgits [metric]="metric"></app-widgits>
+      </ion-col>
+    </ion-row>
+    
+    <!-- Handle no data -->
+    <ion-row class="ion-justify-content-center ion-text-center">
+        <!-- Show spinner while loading -->
+      <ion-col size="12" class="ion-text-center" *ngIf="isLoading">
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-col>
+       <!-- Show no data message -->
+      <ion-col size="12">
+        <ng-container *ngIf="stockData?.length === 0">
+          <p>No stock data available. Please try again later.</p>
+        </ng-container>  
+        <ng-container *ngIf="isError">
+          <ion-button (click)="refreshData()" color="primary" expand="block" fill="outline">
+            Refresh
+          </ion-button>
+        </ng-container>      
+      </ion-col>
+      <!-- Handle filter search -->
+      <ion-col *ngIf="filteredData.length === 0 && stockData.length > 1" class="ion-text-center ion-padding">
+        <p>No matching results found for "{{ searchQuery }}". Please try a different search term.</p>
+      </ion-col>
+    </ion-row>
+  
+    <!-- Show stock items -->
+    <ion-row class="ion-justify-content-evenly">
+      <ion-col class="ion-no-padding" sizeSm="2.5" sizeXs="6" size-md="6" size-lg="1.5" *ngFor="let stockItem of filteredData  let i = index">
+        <ion-card>
+          <img [src]="stockItem.image || '../../assets/images/default.jpg'" (error)="handleImageError($event)" alt="product name">    
+          <ion-chip shape="round" class="quantity">{{ stockItem.quantity }}</ion-chip>      
+          <div class="stockControl">
+            <ion-icon name="pencil-sharp" (click)="updateDetails(stockItem.id)"></ion-icon>
+            <ion-icon name="eye-sharp" (click)="itemDetails(stockItem.id)"></ion-icon>
+            <ion-icon name="bag-handle-sharp" (click)="openModal('avail', stockItem.id)"></ion-icon>
+            <ion-icon name="trash-bin-sharp" (click)="openModal('delete', stockItem.id)"></ion-icon>                        
+          </div>
+          <ion-card-header class="info">
+            <ion-chip>
+              <small>{{ stockItem.product_name }}</small>
+            </ion-chip>
+          </ion-card-header> 
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

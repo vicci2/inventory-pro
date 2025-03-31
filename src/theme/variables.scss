@@ -1,0 +1,141 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+body { 
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-repeat: no-repeat;
+  background-attachment:fixed;
+  background-size:100% 100%;
+}
+/** Ionic CSS Variables **/
+:root {
+  /* ............... theme font family(creating variables in css)..............*/  
+    
+  --Macongo:font-family: "Macondo", cursive;
+  --Water_Brush: "Water Brush", cursive;
+  --Raleway: "Raleway", sans-serif;
+  --Playfair_Display: "Playfair Display", serif;
+  --PT_Sans_Narrow:'PT_Sans_Narrow', sans-serif;
+  --Abel: "Abel", sans-serif; 
+  --Josefin : "Josefin Slab", serif;
+
+/* ...............Gradientcolors   .............. */
+/* --sky2: linear-gradient(120deg,#2c8ebb8f 0%, #c2e9fb 100%);
+--sky: linear-gradient(120deg,#5cd6e6bd 0%, #97f302a6 100%); */
+--sky: linear-gradient(120deg,#68d1dff1 0%, #2c8ebb8f 100%);
+--sky1: linear-gradient(120deg,#97f302a6 0%, #b8b3b3d8 100%);
+--sky4:rgba(68, 68, 68, 0.486);
+--sky6:rgba(22, 24, 22, 0.452);
+--sky5:rgba(240, 113, 9, 0.979);
+--dope: linear-gradient(180deg, #1b1b1be8 20%, #0d243aee 80%);
+--texcolor2:rgba(254, 255, 255, 0.61);
+--dopetrans: linear-gradient(120deg,rgba(255, 255, 255, 0.226) 0%, #44424221 100%);
+/* .......x........Gradientcolors   ........x...... */
+
+/* ............... Transparent bgs   .............. */
+--trans1:rgba(255, 165, 0, 0.73);
+--trans2:rgba(87, 2, 2, 0.73);  
+/* .......x........Transparent bgs   ........x...... */
+
+  /** primary **/
+  --ion-color-primary: #25D366;
+  --ion-color-primary-rgb:  59,215,117;
+  --ion-color-primary-contrast: #34bd67;
+  --ion-color-primary-contrast-rgb:#4fdb82e2;
+  --ion-color-primary-shade: #21ba5a;
+  --ion-color-primary-tint: #3bd775;
+
+  /** secondary **/
+  --ion-color-secondary: #128C7E;
+  --ion-color-secondary-rgb: 18,140,126;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 0,0,0;
+  --ion-color-secondary-shade: #107b6f;
+  --ion-color-secondary-tint: #2a988b;
+
+  /** tertiary **/
+  --ion-color-tertiary: #DCF8C6;
+  --ion-color-tertiary-rgb: 220,248,198;
+  --ion-color-tertiary-contrast: #000000;
+  --ion-color-tertiary-contrast-rgb: 0,0,0;
+  --ion-color-tertiary-shade: #c2daae;
+  --ion-color-tertiary-tint: #e0f9cc;
+
+  /** success **/
+  --ion-color-success: #34B7F1;
+  --ion-color-success-rgb: 52,183,241;
+  --ion-color-success-contrast: #000000;
+  --ion-color-success-contrast-rgb: 0,0,0;
+  --ion-color-success-shade: #2ea1d4;
+  --ion-color-success-tint: #48bef2;  
+
+  /** warning **/
+  --ion-color-warning: #ffc409;
+  --ion-color-warning-rgb: 255,196,9;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0,0,0;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
+
+  /** danger **/
+  --ion-color-danger: #F44336;
+  --ion-color-danger-rgb: 244,67,54;
+  --ion-color-danger-contrast: #dc143c;
+  --ion-color-danger-contrast-rgb: 0,0,0;
+  --ion-color-danger-shade: #d73b30;
+  --ion-color-danger-tint: #f5564a;
+
+  /** light **/
+  --ion-color-light: #ECE5DD;
+  --ion-color-light-rgb: 236,229,221;
+  --ion-color-light-contrast: #f3f1ee;
+  --ion-color-light-contrast-rgb: rgb(255, 255, 255);
+  --ion-color-light-shade: #d0cac2;
+  --ion-color-light-tint: #eee8e0;
+
+  /** medium **/
+  --ion-color-medium: #5f5f5f;
+  --ion-color-medium-rgb: 95,95,95;
+  --ion-color-medium-contrast: #ffffffa9;
+  // --ion-color-medium-contrast: #d3dae035;
+  --ion-color-medium-contrast-rgb: rgba(204, 204, 204, 0.337);
+  --ion-color-medium-shade: #545454;
+  --ion-color-medium-tint: #6f6f6f;
+
+  /** dark **/
+  --ion-color-dark: #075E54;
+  --ion-color-dark-rgb: 7,94,84;
+  --ion-color-dark-contrast: darkslategray;
+  --ion-color-dark-contrast-rgb: 255,255,255;
+  --ion-color-dark-shade: #06534a;
+  --ion-color-dark-tint: #206e65;
+
+  // --background-gradient: linear-gradient(120deg,#9bf50a 0%, #b8b3b3ee 100%);
+  --background-gradient: linear-gradient(120deg, var(--ion-color-primary) 0%, var(--ion-color-light-contrast) 100%);
+  
+  --texcolor2:rgb(255, 255, 255);
+
+  --dope: linear-gradient(120deg,#c50101 0%, #000000 100%);
+  --texcolor7:rgba(246, 247, 242, 0.425);
+
+  /** dope **/
+  --ion-color-dope:linear-gradient(180deg, #1b1b1be8 20%, #0d243aee 80%);
+  --ion-color-dope-contrast: linear-gradient(180deg,#1b1b1b79 20%, #1a232c69 70%);
+  --ion-color-dope-contrast-rgb: linear-gradient(80deg, #60dd9075 20%, #5ee5f777 80%), linear-gradient(180deg, #1b1b1bd5 20%, #0d243ab9 80%);
+  --ion-color-dope-shade:linear-gradient(120deg,rgba(8, 197, 255, 0.582) 0%, #000000 100%);
+  --ion-color-dope-tint:linear-gradient(120deg,rgba(25, 24, 26, 0.356) 0%, #f5f4f40e 100%);
+  --ion-color-doper:linear-gradient(120deg,rgba(255, 255, 255, 0.226) 0%, #44424221 100%);
+  /* ............... Transparent bgs   .............. */
+  --trans1:rgba(255, 165, 0, 0.73);
+  --trans2:rgba(2, 87, 76, 0.815);  
+  --trans3:rgba(22, 12, 37, 0.699);
+  --trans4:rgba(3, 3, 3, 0.73);
+  --trans5:rgba(10, 210, 224, 0.73);
+  /* .......x........Transparent bgs   ........x...... */
+  /* ............... box shadows   .............. */
+  --bxs1:0px 0px 6px rgba(255, 255, 255, 0.5);
+  --bxs2:0px 2px 4px rgba(255, 255, 255, 0.226);
+  --bxs3:0 0 4px rgba(255, 255, 255, 0.5);
+  --bxs4:0 4px 8px rgba(100, 8, 8, 0.5);
+  --bxs5:0 4px 8px rgba(8, 97, 100, 0.5);  
+}

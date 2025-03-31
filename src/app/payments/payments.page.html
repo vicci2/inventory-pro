@@ -1,0 +1,140 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="table-header toolbar ion-margin-horizontal">
+          <!-- Left Section: Title & Filters -->
+          <div class="header-left header-title">
+            <ion-card-title>Top Selling Products
+              <ion-card-subtitle>Products based on their sales performance in 2024.</ion-card-subtitle>
+            </ion-card-title>     
+          </div>
+        
+          <!-- Right Section: Actions & Search -->
+          <div class="header-right  button-container ">
+            <ion-buttons class="header-actions">
+             <ion-button size="small" shape="round" fill="outline" color="dark">
+                <ion-icon name="add-circle-outline"></ion-icon> Add New
+              </ion-button>
+              <ion-button size="small" shape="round" color="dark">
+                <ion-icon name="download-outline"></ion-icon> Export
+              </ion-button>
+            </ion-buttons>
+
+          </div>
+        </div>
+        <ion-card>   
+          <ion-row class="ion-justify-content-center ion-align-items-center">
+            <ion-col size="12" sizeMd="7" sizeLg="8" sizeSm="7" sizeXs="12">
+              <ion-searchbar placeholder="Search" (ionInput)="updateFilter($event)"></ion-searchbar>
+            </ion-col>
+            <ion-col size="12" sizeMd="auto" sizeLg="auto" sizeSm="auto" sizeXs="12">
+              <ion-button fill="clear" shape="round" size="small" color="dark" (click)="openFilterPopover($event)"><ion-icon name="filter-outline"></ion-icon> Filter</ion-button>
+            </ion-col>
+            <!-- Display Selected Filter Chips -->
+            <ion-col size="12" *ngIf="selectedFilters.length > 0" class="header-filters">
+              <ion-chip *ngFor="let filter of selectedFilters" (click)="clearFilters()">
+                {{ getFilterLabel(filter) | titlecase }}
+                <ion-icon name="close-circle-outline"></ion-icon>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="12" *ngIf="selectedFilters.length === 0" class="no-filters-message">
+              <p>No active filters</p>
+            </ion-col>            
+          </ion-row>  
+
+          <!-- Popover for Filters -->
+          <ion-popover [isOpen]="isFilterOpen" [event]="filterEvent" (ionPopoverDidDismiss)="isFilterOpen = false">
+            <ng-template>
+              <ion-content>
+                <ion-list class="popover-list" lines="inset">
+                  <ion-item *ngFor="let option of filterOptions">
+                    <ion-checkbox [(ngModel)]="option.selected"></ion-checkbox>
+                    <ion-label>{{ option.label }}</ion-label>
+                  </ion-item>
+                </ion-list>
+                <ion-buttons class="ion-justify-content-center ion-align-items-center ion-padding popover-actions">
+                  <ion-button expand="full" fill="clear" shape="round" (click)="applyFilters()">Apply Filters</ion-button>
+                  <ion-button expand="full" fill="outline" (click)="clearFilters()">Clear</ion-button>
+                </ion-buttons>
+              </ion-content>        
+            </ng-template>
+          </ion-popover>                
+
+        <ngx-datatable
+          #table
+          class="material"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="'auto'"
+          [loadingIndicator]="loadingIndicator"
+          [scrollbarH]="true"
+          [limit]="10"
+          [rows]="rows"
+          >
+          <ngx-datatable-column name="Product Name">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div class="img">
+                <img [src]="row.image || 'assets/images/default.jpg'" (error)="handleImageError($event)" />
+              </div>
+              <div class="product-text">
+                <span class="product-title">{{ row.name }}</span>
+                <span class="product-subtitle">SNo: {{ row.sku }}</span>
+                <span class="product-subtitle">ID: {{ row.id }}</span>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>          
+
+          <ngx-datatable-column prop="category" name="Category">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <ion-chip>{{ row.category }}</ion-chip>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="In-Store Availability">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <ion-chip [color]="getStockColor(row.inStore)">{{ row.inStore }} PCS</ion-chip>
+            </ng-template>
+          </ngx-datatable-column>
+      
+          <ngx-datatable-column name="Online Availability">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <ion-chip [color]="getStockColor(row.online)">{{ row.online }} PCS</ion-chip>
+              <!-- <ng-template let-value="value" ngx-datatable-cell-template> -->
+                <!-- {{value == 'Male' ? 'Man' : 'Woman'}} -->
+            </ng-template>
+          </ngx-datatable-column>
+         
+          <ngx-datatable-column prop="price" name="Price"></ngx-datatable-column>
+          
+          <ngx-datatable-column prop="supplier" name="Supplier"></ngx-datatable-column>
+      
+          <ngx-datatable-column name="Last Restock Date">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <ion-icon name="timer-outline"></ion-icon> {{ row.restockDate }}
+            </ng-template>            
+          </ngx-datatable-column>
+                
+          <ngx-datatable-column  name="Actions">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <ion-buttons>
+                <ion-button size="small" fill="clear" color="primary">
+                  <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+                <ion-button size="small" fill="clear" color="danger">
+                  <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <ngx-datatable-column prop="supplier" name="Supplier" [hidden]="isMobileView"></ngx-datatable-column>
+isMobileView = window.innerWidth < 768;
+  -->
+</ion-content>
+

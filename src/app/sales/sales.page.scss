@@ -1,0 +1,56 @@
+.sales-card{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    ion-avatar{
+        cursor: pointer;
+        padding: .2rem;
+        transition: ease all 2s;
+    }
+    ion-avatar:hover{
+        background: #c9cac8bb; 
+        // img{
+        //     transform: scaleZ(1);
+        // }       
+    }
+}
+ion-list.section-title-wrap {
+    display: flex; 
+    justify-content: center;
+    ion-chip.section-title {
+      margin: 0 auto; /* Center the chip */
+    }
+  }
+
+  /* Style popover list */
+.popover-list {
+    max-height: 200px; /* Makes the list scrollable */
+    overflow-y: auto;
+  }
+  
+  /* Align buttons inside popover */
+  .popover-actions {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Chips styling */
+  ion-chip {
+    margin-right: 8px;
+    background-color: var(--ion-color-light);
+    cursor: pointer;
+  }
+  
+  ion-chip ion-icon {
+    margin-left: 5px;
+    color: var(--ion-color-danger-shade);
+  }
+
+  .deets{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+  }

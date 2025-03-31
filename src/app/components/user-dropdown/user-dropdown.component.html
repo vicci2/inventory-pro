@@ -1,0 +1,11 @@
+<ion-list class="p-2 w-48">
+  <ion-item
+    *ngFor="let item of menuItems"
+    (click)="handleAction(item.action)"
+    [ngClass]="{'danger': item.danger}"
+    button
+  >
+    <ion-icon [name]="item.icon" class="mr-2" [ngClass]="{'danger': item.danger}"></ion-icon>
+    <ion-label [ngClass]="{'danger': item.danger}">{{ item.label }}</ion-label>
+  </ion-item>
+</ion-list>

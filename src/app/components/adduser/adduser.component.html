@@ -1,0 +1,101 @@
+<ion-content [fullscreen]="true" class="ion-padding ion-justify-content-center ion-align-items-center">
+  <ion-toolbar class="toolbar">
+    <ion-title>
+      Create New User
+      <ion-card-subtitle>Add a New User to the System</ion-card-subtitle>
+    </ion-title>
+    <ion-buttons slot="end" class="backButton">
+      <ion-button (click)="goBack()" fill="clear" class="menu">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="bulkCreateUsers()" fill="outline" color="dark" size="small" shape="round" slot="start" [disabled]="true">
+        <ion-icon name="cloud-upload-outline"></ion-icon>
+        Bulk
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+  <ion-grid>
+    <section>
+      <ion-row class="ion-justify-content-center ion-align-items-center">
+        <ion-col size-md="10" size-lg="8">
+          <app-toast  *ngIf="showToast"
+          [type]="toastType" 
+          [title]="toastTitle" 
+          [message]="toastMessage">
+        </app-toast>
+
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <!-- Name -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-input label="Full Name *" label-placement="floating" fill="outline" placeholder="Enter Full Name" formControlName="fullName" [errorText]="validationService.getErrorMessage(userForm.get('fullName'))">
+                  <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+
+            <!-- Email -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-input label="Email *" label-placement="floating" fill="outline" placeholder="Enter Email" type="email" formControlName="email" [errorText]="validationService.getErrorMessage(userForm.get('email'))">
+                  <ion-icon slot="start" name="mail-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+
+            <!-- Telephone Number -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-input label="Phone Number *" label-placement="floating" fill="outline" placeholder="Enter Phone Number" formControlName="tel_no" [errorText]="validationService.getErrorMessage(userForm.get('tel_no'))">
+                  <ion-icon slot="start" name="call-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+
+            <!-- Role -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-select label="Role" label-placement="floating" fill="outline" placeholder="Select User Role" formControlName="role">
+                  <ion-select-option value="user">User</ion-select-option>
+                  <ion-select-option value="staff">Staff</ion-select-option>
+                   <ion-select-option value="manager">Manager</ion-select-option>
+                  <!--<ion-select-option value="admin">Admin</ion-select-option> -->
+                  <ion-icon slot="start" name="person-add-outline" color="primary"></ion-icon>
+                </ion-select>
+                <ion-text color="danger" *ngIf="userForm.get('role')?.touched && userForm.get('role')?.errors?.['role']">
+                  Please choose a valid Role.
+                </ion-text>
+              </ion-col>
+            </ion-row>
+
+            <!-- Avatar -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label>Avatar</ion-label>
+                </ion-item>
+                <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+                <ion-icon slot="start" name="image-outline" color="primary"></ion-icon>
+                <ion-img *ngIf="imageUrl" [src]="imageUrl" class="avatar-preview"></ion-img>
+              </ion-col>
+            </ion-row>
+
+            <ion-buttons class="ion-margin ion-justify-content-evenly">
+               <!-- Reset Button -->
+               <ion-button color="primary" shape="round" fill="clear" (click)="userForm.reset()" [disabled]="userForm.pristine">
+                <ion-icon slot="start" name="refresh-circle"></ion-icon> Reset
+              </ion-button>
+
+               <!-- Create User Button -->
+               <ion-button color="primary" shape="round" type="submit" [disabled]="userForm.invalid">
+                 <ion-icon slot="end" name="person-add-outline"></ion-icon>
+                 Create User
+               </ion-button>
+             </ion-buttons>
+          </form>
+        </ion-col>
+      </ion-row>
+    </section>
+  </ion-grid>
+</ion-content>

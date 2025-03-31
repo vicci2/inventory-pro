@@ -1,0 +1,150 @@
+<ion-content>
+  <ion-grid>
+    <!-- Summary Section -->
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="3" sizeMd="3" sizeSm="4" sizeLg="2" sizeXs="6" *ngFor="let metric of metrics">
+        <app-widgits [metric]="metric"></app-widgits>
+      </ion-col>
+    </ion-row>
+        
+    <!-- Summary Section -->
+    <ion-list lines="none" class="section-title-wrap">
+      <ion-chip class="section-title">All Sales</ion-chip>
+    </ion-list>
+
+    <!-- Show spinner while loading -->
+    <ion-row class="ion-justify-content-center" *ngIf="isLoading">
+      <ion-col size="12" class="ion-text-center">
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-col>
+    </ion-row>
+    
+    <!-- Show no data message -->
+    <ion-row *ngIf="!isLoading && isError" class="ion-text-center ion-padding">
+      <ion-col>
+        <ion-button (click)="refreshData()" color="primary" expand="block" fill="outline">
+          Refresh
+        </ion-button>
+      </ion-col>
+    </ion-row>   
+
+    <!-- Sales Data Section --> 
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="12" sizeXl="10" sizeLg="10" sizeMd="12" sizeSm="12" sizeXs="12">
+        <ion-card >
+          <ion-row class="ion-justify-content-center ion-align-items-center">
+            <ion-col size="12" sizeMd="7" sizeLg="8" sizeSm="7" sizeXs="12">
+              <ion-searchbar placeholder="Search"></ion-searchbar>
+            </ion-col>
+            <ion-col size="12" sizeMd="3" sizeLg="4" sizeSm="3" sizeXs="12">
+              <ion-button fill="clear" shape="round" size="small" color="dark" (click)="openFilterPopover($event)">
+                <ion-icon name="filter-outline"></ion-icon> Filter
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          
+          <!-- Display Selected Filters as Chips -->
+          <ion-row *ngIf="selectedFilters.length > 0">
+            <ion-col size="12">
+              <ion-chip *ngFor="let filter of selectedFilters" (click)="removeFilter(filter)">
+                {{ getFilterLabel(filter) | titlecase }}
+                <ion-icon name="close-circle-outline"></ion-icon>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+          
+          <!-- Popover for Filters -->
+          <ion-popover [isOpen]="isFilterOpen" [event]="filterEvent" (ionPopoverDidDismiss)="isFilterOpen = false">
+            <ng-template>
+              <ion-content>
+                <ion-list class="popover-list" lines="inset">
+                  <ion-item *ngFor="let option of filterOptions">
+                    <ion-checkbox [(ngModel)]="option.selected"></ion-checkbox>
+                    <ion-label>{{ option.label }}</ion-label>
+                  </ion-item>
+                </ion-list>
+                <ion-buttons class="ion-justify-content-center ion-align-items-center ion-padding popover-actions">
+                  <ion-button expand="full" fill="clear" shape="round" (click)="applyFilters()">Apply Filters</ion-button>
+                  <ion-button expand="full" fill="outline" (click)="clearFilters()">Clear</ion-button>
+                </ion-buttons>
+              </ion-content>        
+            </ng-template>
+          </ion-popover> 
+
+          <ngx-datatable #table class="material"  [columnMode]="ColumnMode.force"
+          [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [loadingIndicator]="loadingIndicator" [scrollbarH]="true" [limit]="10"
+          [rows]="rows">
+
+          <ngx-datatable-column name="Sale Details">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div class="deets">
+                <div class="ion-text-center">
+                  <img [src]="row.image || 'assets/images/default.jpg'" (error)="handleImageError($event)"
+                       alt="Profile image" style="width: 60px; border-radius: 10px;">
+                </div>
+                <ion-card-title>product_name 
+                  <ion-card-subtitle>
+                    <ion-icon name="pulse-outline" size="small"></ion-icon> {{ row.status }}</ion-card-subtitle>                
+                  <small>
+                    <ion-card-subtitle>
+                      <ion-icon name="calendar-outline" size="small"></ion-icon> {{ row.last_updated | date: 'mediumDate' }}
+                    </ion-card-subtitle>
+                  </small>
+                </ion-card-title>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>  
+          
+          <ngx-datatable-column name="Quantity">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <ion-card-title class="ion-text-muted small">
+                <ion-icon name="cube-outline" size="small"></ion-icon>           <small>{{row.quantity | number:'1.0-0'}} units</small>        
+              </ion-card-title>                          
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Pricing">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                
+                <ion-card-subtitle>
+                  <ion-icon name="pricetag-outline" size="small"></ion-icon>
+                  <small>Ksh {{row.selling_price | number:'1.2-2'}}</small>          
+                </ion-card-subtitle>
+              
+                <small class="ion-text-muted small">
+                  <ion-card-subtitle>
+                    <ion-icon name="cash-outline" size="small"></ion-icon>
+                    <small>Ksh {{row.base_price}}</small>
+                  </ion-card-subtitle>
+                </small>
+            </ng-template>
+          </ngx-datatable-column>  
+          
+          <ngx-datatable-column name="Actions">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <ion-buttons>
+                <ion-button size="small" fill="clear" (click)="itemDetails(row.inventory_id)" shape="round" color="dark">
+                  <ion-icon name="eye-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+                
+                <ion-button size="small" fill="clear" shape="round" color="secondary">               
+                  <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+        
+                <ion-button size="small" fill="clear" shape="round" color="primary">   
+                  <ion-icon name="bag-handle-outline"  slot="icon-only"></ion-icon>
+                </ion-button>
+        
+                <ion-button size="small" fill="clear" shape="round" color="danger" (click)="openModal()"> 
+                    <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                </ion-button>        
+              </ion-buttons>
+            </ng-template>
+          </ngx-datatable-column>  
+        </ngx-datatable>              
+        </ion-card>
+      </ion-col>              
+    </ion-row>       
+  </ion-grid>
+</ion-content>
+

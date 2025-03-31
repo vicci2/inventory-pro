@@ -1,0 +1,179 @@
+ion-header {
+  --background: white;
+}
+.logo {
+  height: 40px;
+}
+
+.hero-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .circle {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .center {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      transition: transform 0.3s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      &:hover {
+        transform: scale(1.08);
+        box-shadow: 0 4px 10px var(--ion-color-light-shade);
+      }
+    }
+    .icon {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      padding: .2rem;
+      border-radius: 50%;
+      border: solid .1rem rgba(0, 0, 0, 0.1);
+      font-size: 2rem;
+      transition: transform 0.3s;
+      &:hover{
+        border: none;
+        background: var(--ion-color-medium);
+        box-shadow: 0 4px 10px var(--ion-color-medium-tint);
+          ion-icon{
+              color: var(--ion-color-secondary);
+          }
+      }
+      img {
+        width: 100%;
+      }
+  }
+  }
+}
+
+/* Position icons in a circular pattern */
+.top {
+   top: 0; 
+   left: 50%; 
+   transform: translateX(-50%); 
+  }
+  
+.topRight { 
+  top: 20%; right: 0;    
+  &:hover {
+  transform: scale(1.05);
+}
+}
+.bottomRight { 
+  bottom: 20%; right: 0;       
+  &:hover {
+  transform: scale(1.05);
+}
+}
+.bottom { 
+  bottom: 0; 
+  left: 50%; 
+  transform: translateX(-50%); 
+}
+.bottomLeft { 
+  bottom: 20%; left: 0; 
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+.topLeft { 
+  top: 20%; left: 0;
+  &:hover {
+    transform: scale(1.05);
+  } 
+}
+
+// price tiers
+.pricing-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: left;
+}
+
+.highlighted {
+  border: 2px solid var(--ion-color-warning);
+  background: #f9f9f9;
+}
+
+.price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  background: transparent;
+}
+
+.feature-list ion-item  {
+  --background: transparent;
+  margin: 5px 0;
+}
+
+.buy-button, .contact-button {
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+
+@media (max-width: 770px) {
+  .feature-list {
+    padding-left: 15px;
+  }
+
+  .price {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .buy-button,
+  .contact-button {
+    margin-top: 10px;
+  }
+}
+
+.feature-list {
+  padding-left: .8rem; /* Add padding for better spacing */
+}
+
+.price {
+  font-size: 1.5rem;
+  margin-bottom: .8rem;
+}
+
+.buy-button,
+.contact-button {
+  margin-top: .6rem;
+}
+
+.hero-section .highlight {
+  color:  var(--ion-color-primary);
+  font-weight: bold;
+}
+
+.action-buttons {
+  justify-content: center;
+  margin: 0 auto;    
+}
+
+.features{
+  background: var(--ion-color-dark-shade);
+}

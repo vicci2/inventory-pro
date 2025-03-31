@@ -1,0 +1,111 @@
+<ion-content [fullscreen]="true" class="ion-padding ion-justify-content-center ion-align-items-center">
+  <ion-toolbar class="toolbar">
+    <ion-title>
+      Update {{userData?.username}} Details
+      <ion-card-subtitle>Edit the {{userData?.role | titlecase}}'s Information</ion-card-subtitle>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goBack()" fill="clear" class="menu">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-grid>
+    <section>
+      <ion-row class="ion-justify-content-center">
+        <app-toast  *ngIf="showToast"
+        [type]="toastType" 
+        [title]="toastTitle" 
+        [message]="toastMessage">
+      </app-toast>
+        <ion-col size-md="10" size-lg="8">
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <!-- Full Name -->
+            <ion-row class="ion-padding">
+              <ion-col size="6">
+                <ion-input label="Full Name *" label-placement="floating" fill="outline" type="text"
+                  formControlName="fullName" placeholder="Enter full Name">
+                  <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+
+              <ion-col size="6">
+                <ion-input label="User Name *" label-placement="floating" fill="outline" type="text"
+                  formControlName="username" placeholder="Enter username">
+                  <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+          
+            <!-- User Email -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-input label="Email *" label-placement="floating" fill="outline" type="email"
+                  formControlName="email" placeholder="Enter Email Address">
+                  <ion-icon slot="start" name="mail-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+          
+            <!-- User Address -->
+            <!-- <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-input label="Address" label-placement="floating" fill="outline" type="text"
+                  formControlName="address" placeholder="Enter Address">
+                  <ion-icon slot="start" name="home-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row> -->
+          
+            <!-- User Phone Number -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-input label="Phone Number *" label-placement="floating" fill="outline" type="tel"
+                  formControlName="tel_no" placeholder="Enter Phone Number">
+                  <ion-icon slot="start" name="call-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+          
+            <!-- User Avatar Image -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label>Avatar</ion-label>
+                  <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+                  <ion-icon slot="start" name="image-outline" color="primary"></ion-icon>
+                </ion-item>
+                <ion-img *ngIf="imageUrl" [src]="imageUrl"></ion-img>
+              </ion-col>
+            </ion-row>
+          
+            <!-- User Status -->
+            <!-- <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-select label="Status" fill="outline" label-placement="floating"
+                  formControlName="status" placeholder="Select Status" interface="popover">
+                  <ion-select-option value="Completed">Completed</ion-select-option>
+                  <ion-select-option value="Pending">Pending</ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row> -->
+          
+            <ion-buttons class="ion-margin ion-justify-content-evenly">
+              <!-- Reset Button -->
+              <ion-button color="primary" shape="round" fill="clear" (click)="userForm.reset()" [disabled]="userForm.pristine">
+                <ion-icon slot="start" name="refresh-circle"></ion-icon> Reset
+              </ion-button>
+          
+              <!-- Update Supplier Button -->
+              <ion-button color="primary" shape="round" type="submit" [disabled]="userForm.pristine || userForm.pristine">
+                <ion-icon slot="end" name="person-add-outline"></ion-icon>
+                Update Supplier
+              </ion-button>
+            </ion-buttons>
+          </form>
+        </ion-col>
+      </ion-row>
+    </section>
+  </ion-grid>
+</ion-content>

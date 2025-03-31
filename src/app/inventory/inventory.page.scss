@@ -1,0 +1,56 @@
+ion-card {
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    cursor: pointer;
+    border-bottom-left-radius: 0%;
+    border-bottom-right-radius: 0%;
+    &:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      .image-wrapper img {
+        transform: scale(1.01); /* Zoom out the image */
+      }
+    }
+    .control{
+      top: 0;
+      ion-icon {
+        color: rgb(17, 122, 3);
+        &:hover {
+          color: rgba(122, 3, 3, 0.932);
+        }
+      }
+    }
+    ion-card-title {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-top: 0;
+    }  
+    ion-note {
+      font-size: small;
+      color: #666;
+      margin-top: 4px;
+    }
+    ion-chip{
+      position: absolute;
+      bottom: 0;
+      right: .2rem;
+      z-index: 1;    
+      background: #f9fffd7e;
+    }
+  }
+  
+  .bottom{
+      position: absolute;
+      bottom:0;
+      width: 100%;
+      padding: .2rem 0;
+  }
+  .error-text {
+    color: var(--ion-color-danger);
+    font-weight: bold;
+  }
+  .disabled-icon {
+    pointer-events: none;  /* Prevent clicks */
+    opacity: 0.5;  /* Make it look disabled */
+  }
+  

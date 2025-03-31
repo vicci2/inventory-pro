@@ -1,0 +1,15 @@
+<ion-grid>
+  <ion-row class="ion-justify-content-center ion-align-items-center">
+    <ion-card class="success-card ion-no-padding">
+      <div class="icon-container" [ngStyle]="{'background': bgColor}">
+        <ion-icon [name]="iconName" class="success-icon"></ion-icon>
+      </div>
+      <div class="message-container">
+        <ion-title [ngStyle]="{'color': textColor}" class="success-title">
+          {{ title }}
+          <ion-card-subtitle>{{ message }}</ion-card-subtitle>
+        </ion-title>
+      </div>
+    </ion-card>   
+  </ion-row>
+</ion-grid>

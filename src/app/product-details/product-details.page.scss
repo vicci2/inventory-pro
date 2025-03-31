@@ -1,0 +1,54 @@
+ion-card {
+    border-radius: .6rem;
+  }
+  .product-image {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  
+    img {
+      width: 90%;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  ion-card {
+    small {
+      color: var(--ion-color-medium);
+    }
+  }
+  
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  
+    ion-icon {
+      margin-right: 10px;
+      font-size: 20px;
+    }
+  
+    span {
+      font-size: 14px;
+      color: var(--ion-color-dark);
+    }
+  }
+  
+  ion-segment {
+    --background: var(--ion-color-light);
+    ion-segment-button {
+        margin: 10px;
+        --background: #fff;
+        --border-color: var(--ion-color-light);
+        --indicator-color: var(--ion-color-primary);
+        --color: var(--ion-color-primary);
+        --color-checked: var(--ion-color-light);
+        --border-radius: 1rem;
+        ion-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+    }
+  }

@@ -1,0 +1,10 @@
+ion-item {
+    --background: transparent;
+    --color: inherit;
+.danger{
+  color: var(--ion-color-danger);
+}  
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }

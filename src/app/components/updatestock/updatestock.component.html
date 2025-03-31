@@ -1,0 +1,87 @@
+<ion-content [fullscreen]="true" class="ion-padding ion-justify-content-center ion-align-items-center">
+  <ion-toolbar class="toolbar">
+    <ion-title>
+      Update Product Details
+      <ion-card-subtitle>Edit the Product's Information</ion-card-subtitle>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goBack()" fill="clear" class="menu">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-grid>
+    <section>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-md="10" size-lg="8">
+          <app-toast  *ngIf="showToast"
+          [type]="toastType" 
+          [title]="toastTitle" 
+          [message]="toastMessage">
+        </app-toast>
+          <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+            <!-- Product Name -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-input label="Product Name *" label-placement="floating" fill="outline" type="text" placeholder="Enter Product Name" formControlName="product_name">
+                  <ion-icon slot="start" name="cube-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+
+            <!-- Category -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-select formControlName="category" label="Category" fill="outline" label-placement="floating" placeholder="Select Category" interface="popover">
+                  <ion-select-option value="Gaming">Gaming</ion-select-option>
+                  <ion-select-option value="Workstation">Workstation</ion-select-option>
+                  <ion-select-option value="Office">Office</ion-select-option>
+                  <ion-select-option value="Others">Others</ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+
+            <!-- Product Description -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-textarea label="Description" label-placement="floating" fill="outline" placeholder="Enter Product Description" formControlName="desc">
+                  <ion-icon slot="start" name="document-text-outline" color="primary"></ion-icon>
+                </ion-textarea>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-padding">
+              <!-- Product Quantity -->
+              <ion-col size="6">
+                  <ion-input label="Stock Quantity *" label-placement="floating" fill="outline" type="number" placeholder="Enter Stock Quantity" formControlName="quantity">
+                    <ion-icon slot="start" name="cart-outline" color="primary"></ion-icon>
+                  </ion-input>
+
+              </ion-col>
+              <!-- Buying Price -->
+              <ion-col size="6">
+                <ion-input label="Buying Price (KES) *" label-placement="floating" fill="outline" type="number" placeholder="Enter Buying Price" formControlName="b_p">
+                  <ion-icon slot="start" name="cash-outline" color="primary"></ion-icon>
+                </ion-input>                
+              </ion-col>
+            </ion-row>
+
+            <ion-buttons class="ion-margin ion-justify-content-evenly">               
+              <!-- Reset Button -->
+              <ion-button color="primary" shape="round" fill="clear" (click)="productForm.reset()" [disabled]="productForm.pristine">
+                <ion-icon slot="start" name="refresh-circle"></ion-icon> Reset
+              </ion-button>              
+
+              <!-- Update Product Button -->
+              <ion-button color="primary" shape="round" type="submit" [disabled]="productForm.pristine">
+                <ion-icon slot="end" name="pricetags-outline"></ion-icon>
+                Update Product
+              </ion-button>             
+            </ion-buttons>
+          </form>
+        </ion-col>
+      </ion-row>
+    </section>
+  </ion-grid>
+</ion-content>

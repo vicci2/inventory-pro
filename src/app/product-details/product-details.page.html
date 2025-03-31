@@ -1,0 +1,133 @@
+<ion-content [fullscreen]="true" class="ion-padding ion-justify-content-center ion-align-items-center">
+  <ion-toolbar class="toolbar">
+    <ion-title>
+      {{ loadedItem?.product_name || 'Product Details' }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goBack()" fill="clear" class="menu">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="4" sizeMd="4" sizeSm="12" sizeXs="12">
+        <!-- [class.hidden]="!loadedItem?.image"
+        <ion-spinner *ngIf="loading"></ion-spinner> -->
+        <!-- Product Image -->
+        <div class="product-image">
+          <img [src]="loadedItem?.image || '../../assets/images/default.jpg'" (error)="handleImageError($event)" alt="{{ loadedItem?.product_name }}" />
+        </div>
+      </ion-col>
+      <ion-col size="8" sizeMd="8" sizeSm="12" sizeXs="12">
+        <ion-spinner *ngIf="!loadedItem"></ion-spinner>
+        <!-- Description Section -->
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Description</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-textarea [readonly]="true" [value]="loadedItem?.desc || 'No description available'">                   
+            </ion-textarea>
+          </ion-card-content>
+        </ion-card>
+        <!-- Info Cards -->
+        <ion-row>
+          <ion-segment [value]="segment_value" (ionChange)="changeSegment($event)" mode="ios">
+            <!-- <ion-segment-button value="inventory" [ngStyle]="{ 'background-color': selectedSegment === 'inventory' ? 'var(--ion-color-medium-shade)' : '' }">
+            <ion-label>Inventory</ion-label>
+          </ion-segment-button> -->
+          <ion-segment-button value="stock">
+            <ion-label>Stock</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="inventory">
+            <ion-label>Inventory</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="sales">
+            <ion-label>Sales</ion-label>
+          </ion-segment-button>          
+        </ion-segment>
+        </ion-row>
+
+        <ion-row class="ion-justify-content-center">
+          <ion-col *ngFor="let card of displayedCards" [size]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+            <ion-card [color]="card.color">
+              <ion-card-header>
+                <ion-card-subtitle> 
+                  <ion-icon [name]="card.icon"></ion-icon>           
+                  {{ card.title }}
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-note>
+                  {{ card.value }} <small>{{ card.unit }}</small>
+                </ion-note>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <!-- Timeline Section -->
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class="ion-justify-content-center ">
+              <ion-icon name="time-outline" color="medium"></ion-icon> Timeline
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="timeline-item">
+              <ion-icon name="add-circle-outline" color="success"></ion-icon>
+              <span *ngIf="selectedTimeline?.createdAt; else unknownDate">
+                Created: {{ selectedTimeline.createdAt  | date: 'fullDate' }}
+              </span>
+              <ng-template #unknownDate>
+                <span>Created: Unknown</span>
+              </ng-template>              
+            </div>
+            <div class="timeline-item">
+              <ion-icon name="refresh-circle-outline" color="secondary"></ion-icon>
+              <span *ngIf="selectedTimeline?.updatedAt; else unknownDate">
+                Last Updated: {{ selectedTimeline.updatedAt  | date: 'EEEE, MMMM dd, y, HH:mm' }}
+              </span>
+              <ng-template #unknownDate>
+                <span>Last Updated: Unknown</span>
+              </ng-template> 
+            </div>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<!-- 
+ style="background: rgb(222, 186, 143);"
+         <ion-segment [(ngModel)]="selectedSegment" (ionChange)="onSegmentChange($event)">
+          <ion-segment-button *ngFor="let segment of segments" [value]="segment">
+            <ion-label>{{ segment | titlecase }}</ion-label>
+          </ion-segment-button>
+        </ion-segment> 
+
+        <app-analytic-card [analyticsData]="displayedCards"></app-analytic-card>
+
+          <ion-row>
+    <ion-segment [value]="segment_value" (ionChange)="changeSegment($event)" mode="ios">
+      <ion-segment-button value="description">
+        <ion-label>Description</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="company">
+        <ion-label>Company</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="reviews">
+        <ion-label>Reviews</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-row>
+  ts
+  segment_value = "description"
+    changeSegment(event: any) {
+    console.log(event);
+    this.segment_value = event.detail.value;
+  }
+-->

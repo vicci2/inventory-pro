@@ -1,0 +1,15 @@
+<ion-content class="ion-padding">
+  <ion-card-header>
+    <ion-card-title><ion-icon  [name]="icon" class="icon"></ion-icon></ion-card-title>
+    <ion-card-subtitle class="title">{{ title | titlecase }}</ion-card-subtitle>
+    <p>{{ content | titlecase }}</p>
+  </ion-card-header>
+  
+  <ion-buttons class="buttons">
+    <ion-button (click)="closeModal()" color="medium" fill="outline" shape="round">Cancel</ion-button>
+    <ion-button *ngIf="button" (click)="button.handler()" fill="solid" shape="round">
+      {{ button.text | uppercase}}
+    </ion-button>
+  </ion-buttons>
+</ion-content>
+<!-- (click)="button.handler(); closeModal()" -->

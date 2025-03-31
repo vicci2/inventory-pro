@@ -1,0 +1,145 @@
+<ion-content [fullscreen]="true" class="ion-padding ion-justify-content-center ion-align-items-center">
+  <ion-toolbar class="toolbar">
+    <ion-title>
+      Create New Product
+      <ion-card-subtitle>Add A New Stock Item</ion-card-subtitle>
+    </ion-title>
+    <ion-buttons slot="end" class="backButton">
+      <ion-button (click)="goBack()" fill="clear" class="menu">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="outline" color="dark" size="small" shape="round" slot="start" [disabled]="true">
+        <ion-icon name="cloud-upload-outline"></ion-icon>
+        Bulk
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-grid>
+    <section>
+      <ion-row class="ion-justify-content-center ion-align-items-center">
+        <ion-col size-md="10" size-lg="8">
+          <app-toast  *ngIf="showToast"
+          [type]="toastType" 
+          [title]="toastTitle" 
+          [message]="toastMessage">
+        </app-toast>
+        
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+          <!-- Vendor -->
+          <ion-row class="ion-padding">
+            <ion-col size="12" sizeMd="6" sizeSm="6">
+              <ion-item lines="none">
+                <ion-icon slot="start" name="business-outline" color="primary"></ion-icon>
+                <ion-select 
+                  formControlName="vendor_id" 
+                  label="Supplier" 
+                  fill="outline" 
+                  label-placement="floating" 
+                  interface="popover"
+                >
+                  <ion-select-option [value]="null" disabled>Select Supplier</ion-select-option>
+                  <ion-select-option *ngFor="let vendor of vendors" [value]="vendor.id">{{ vendor.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-text color="danger" *ngIf="productForm.get('vendor_id')?.invalid && productForm.get('vendor_id')?.touched">
+                {{ validationService.getErrorMessage(productForm.get('vendor_id')) }}
+              </ion-text>
+            </ion-col>
+          
+            <!-- Category -->
+            <ion-col size="12" sizeMd="6" sizeSm="6">
+              <ion-item  lines="none">
+                <ion-icon slot="start" name="apps-outline" color="primary"></ion-icon>
+                <ion-select 
+                  formControlName="category" 
+                  label="Category" 
+                  fill="outline" 
+                  label-placement="floating" 
+                  interface="popover"
+                >
+                  <ion-select-option [value]="null" disabled>Select Category</ion-select-option>
+                  <ion-select-option *ngFor="let category of categories" [value]="category">{{ category }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-text color="danger" *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched">
+                {{ validationService.getErrorMessage(productForm.get('category')) }}
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <!-- Product Name -->
+          <ion-row class="ion-padding ion-justify-content-center">
+            <ion-col size="12" sizeMd="5" sizeSm="5">
+              <ion-input label="Product Name *" label-placement="floating" fill="outline" type="text" placeholder="Enter Product Name" formControlName="product_name"  [errorText]="validationService .getErrorMessage(productForm.get('product_name'))">
+                <ion-icon slot="start" name="cube-outline" color="primary"></ion-icon>
+              </ion-input>
+            </ion-col>
+
+            <!-- Serial Number -->
+            <ion-col size="12" sizeMd="5" sizeSm="5">
+              <ion-input label="Serial Number" label-placement="floating" fill="outline" placeholder="Enter serial number" type="text" formControlName="serial_no"  [errorText]="validationService .getErrorMessage(productForm.get('serial_no'))">
+                <ion-icon slot="start" name="barcode-outline" color="primary"></ion-icon>
+              </ion-input>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="ion-padding ion-justify-content-center">
+            <ion-col size="12" sizeMd="5" sizeSm="5">
+              <ion-input label="Stock Quantity *" label-placement="floating" fill="outline" type="number" placeholder="Enter stock quantity" formControlName="quantity" [errorText]="validationService.getErrorMessage(productForm.get('quantity'))">
+                <ion-icon slot="start" name="cart-outline" color="primary"></ion-icon>
+              </ion-input>
+            </ion-col>
+
+            <ion-col size="12" sizeMd="5" sizeSm="5">
+              <ion-input label="Buying Price (KES) *" label-placement="floating" fill="outline" type="number" placeholder="Enter buying price" formControlName="b_p"  [errorText]="validationService .getErrorMessage(productForm.get('b_p'))">
+                <ion-icon slot="start" name="cash-outline" color="primary"></ion-icon>
+              </ion-input>
+            </ion-col>
+
+            <!-- <ion-col size="4">
+              <ion-input label="Selling Price (KES) *" label-placement="floating" fill="outline" type="number" placeholder="Enter selling price" formControlName="sellingPrice"  [errorText]="validationService .getErrorMessage(productForm.get('name'))">
+                <ion-icon slot="start" name="cash-outline" color="primary"></ion-icon>
+              </ion-input>
+            </ion-col> -->
+          </ion-row>
+
+          <div class="ion-padding">
+            <ion-textarea label="Product Description" label-placement="floating" fill="outline" placeholder="Enter a brief description" type="text" formControlName="desc"  [errorText]="validationService .getErrorMessage(productForm.get('desc'))">
+              <ion-icon slot="start" name="document-text-outline" color="primary"></ion-icon>
+            </ion-textarea>
+          </div>
+
+          <!-- <ion-row class="ion-padding">
+            <ion-col size="4"> -->
+              <!-- Product Image File Input -->
+              <!-- <ion-item>
+                <ion-label>Product Image</ion-label>
+              </ion-item>
+              <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+              <ion-icon slot="start" name="image-outline" color="primary"></ion-icon>
+            </ion-col>
+            <ion-col size="4"> -->
+              <!-- Image Preview -->
+              <!-- <ion-img *ngIf="imageUrl" [src]="imageUrl"></ion-img>
+            </ion-col>
+          </ion-row> -->
+
+          <ion-buttons class="ion-margin ion-justify-content-evenly">               
+             <!-- Reset Button -->
+             <ion-button color="primary" shape="round" fill="clear" (click)="productForm.reset()" [disabled]="productForm.pristine">
+              <ion-icon slot="start" name="refresh-circle"></ion-icon> Reset
+            </ion-button>              
+
+             <!-- Create Product Button -->
+             <ion-button color="primary" shape="round" type="submit" [disabled]="productForm.invalid">
+               <ion-icon slot="end" name="pricetags-outline"></ion-icon>
+               Stock Up
+             </ion-button>             
+           </ion-buttons>
+        </form>
+        </ion-col>
+      </ion-row>
+    </section>
+  </ion-grid>
+</ion-content>

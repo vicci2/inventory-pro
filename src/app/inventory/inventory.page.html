@@ -1,0 +1,129 @@
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-evenly ion-padding-horizontal ion-margin-horizontal">
+      <ion-col size="10">
+        <app-search-filter [data]="inventoryData" 
+        [entityType]="'inventory'" 
+        [searchKey]="'product_name'"
+        [displayKey]="'product_name'"
+        (filteredResults)="filteredData = $event"
+        (addEntity)="openAddInventoryModal()"></app-search-filter>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="3" sizeMd="3" sizeSm="4" sizeLg="2" sizeXs="6" *ngFor="let metric of metrics">
+        <app-widgits [metric]="metric"></app-widgits>
+      </ion-col>
+    </ion-row>
+    
+    <!-- Handle no data -->
+    <ion-row class="ion-justify-content-center ion-text-center" >
+      <!-- Show spinner while loading -->
+    <ion-col size="12" class="ion-text-center" *ngIf="isLoading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </ion-col>
+     <!-- Show no data message -->
+    <ion-col size="10">
+      <ng-container *ngIf="inventoryData?.length === 0">
+        <p>No Inventory data available. Please try avaling items from your stock.</p>
+        <ion-button shape="round" size="small" fill="outline" color="primary" [routerLink]="['/stock']">Avail</ion-button>
+      </ng-container>
+      <ng-container *ngIf="isError">
+        <ion-button (click)="refreshData()" color="primary" expand="block" fill="outline">
+          Refresh
+        </ion-button>
+      </ng-container>
+    </ion-col>
+    </ion-row>
+    
+    <!-- Inventory Items Section -->
+    <ion-row class="ion-justify-content-center">
+    
+      <!-- inventoryData Section-->
+      <ion-col class="ion-no-padding" size-md="6" size-lg="2" sizeSm="4" sizeXs="6" *ngFor="let item of filteredData; let i = index">
+        <ion-card>
+          <div class="control ion-justify-content-evenly">
+            <ion-icon name="bag-add-sharp" (click)="adjustInventory(item.id, 'increase')"></ion-icon>
+            <ion-icon name="bag-handle-sharp" (click)="viewInventory()"></ion-icon>
+            <ion-icon 
+            name="pricetag-sharp" 
+            (click)="openPopover(item)" 
+            [class.disabled-icon]="item.quantity < 1">
+          </ion-icon>          
+            <ion-icon name="bag-remove-sharp" (click)="adjustInventory(item.id, 'reduce')"></ion-icon>
+          </div>
+          
+          <div class="image-wrapper">
+            <img [src]="item.image || '../../assets/images/default.jpg'" 
+                 (error)="handleImageError($event)" 
+                 alt="{{ item.product_name }}" 
+                 (click)="itemDetails(item.product_id)"/>
+          </div>
+          
+          <ion-card-content class="bottom">
+            <ion-card-title>{{ item.product_name }}</ion-card-title>
+            <ion-chip shape="round">{{ item.quantity }}</ion-chip>          
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      
+      <!-- Popover -->
+      <ion-popover [isOpen]="isPopoverOpen" [backdropDismiss]="false">
+        <ng-template #popoverContent>
+          <div class="popover-header">
+            <h4 [ngClass]="{ 'error-text': isError }">
+              {{ isError ? 'Sale Error' : 'Make Sale' }}
+            </h4>            
+            <ion-button fill="clear" size="small" (click)="closePopover()">
+              <ion-icon name="close-circle-outline"></ion-icon>
+            </ion-button>
+          </div>
+          
+          <!-- Show error text only when isError is true -->
+          <small *ngIf="isError" class="error-text ion-padding">
+            {{ errorText }}
+          </small>
+          
+          <form [formGroup]="sellForm" (ngSubmit)="sell(selectedItem, sellForm)" class="ion-padding -horizontal">
+            <div>
+              <ion-input formControlName="quantity" label="Quantity" label-placement="floating" fill="outline" type="number"[errorText]="validationService.getErrorMessage(sellForm.get('quantity'))" placeholder="Enter quantity">
+                <ion-icon slot="end" name="cart" color="primary"></ion-icon>
+              </ion-input>      
+            </div>
+        
+            <div class="ion-padding-top">
+              <ion-input formControlName="selling_price" label="Selling Price" label-placement="floating" fill="outline" type="number"
+                         [errorText]="validationService.getErrorMessage(sellForm.get('selling_price'))" placeholder="Enter price">
+                <ion-icon slot="end" name="cash" color="primary"></ion-icon>
+              </ion-input>      
+            </div>
+        
+            <ion-button expand="full" shape="round" fill="outline" type="submit" [disabled]="!sellForm.valid">Sell</ion-button>
+          </form>
+        </ng-template>
+      </ion-popover>
+
+      <!-- <ion-col sizeXl="1.4" sizeLg="3" sizeMd="3" sizeSm="3" sizeXs="6" *ngFor="let item of filteredData">
+        <div class="control ion-justify-content-space-between ion-margin-top">
+          <ion-icon name="bag-add-sharp"></ion-icon>
+          <ion-icon name="bag-handle-sharp"></ion-icon>
+          <ion-icon name="bag-remove-sharp"></ion-icon>
+          </div>
+        <div>
+          <ion-card-header class="inventory-card">
+            <div>
+              <ion-avatar>
+                <img [src]="item.image || 'assets/images/default.jpg'" 
+                alt="No image available for this inventory item" 
+                class="card-image">           
+              </ion-avatar>
+            </div>
+            <ion-card-subtitle>{{ item.product_name }}</ion-card-subtitle>
+          </ion-card-header>
+        </div>
+      </ion-col> -->
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,100 @@
+.tier-card {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+  }
+
+  .tier-card:hover {
+    transform: scale(1.05);
+  }
+
+  ion-card-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+
+  ion-card-subtitle {
+    font-size: 1rem;
+    color: var(--ion-color-medium);
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  ul li {
+    margin: 0.5rem 0;
+  }
+
+  fieldset{
+    color: var(--ion-color-medium);
+    border: .1rem solid var(--ion-color-medium);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .tiers-container {
+    max-width: 1200px;
+    margin: auto;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  .tier-card:focus {
+      outline: 3px solid var(--ion-color-primary);
+    }
+  .tier-card ul {
+    padding-left: 1rem;
+    list-style-type: disc;
+  }
+  .tier-card.basic {
+    border: 1.5px solid var(--ion-color-warning);
+    ul{
+        li::marker {
+            color: var(--ion-color-warning);            
+        }
+    }
+  }
+  .tier-card.standard {
+    border: 1.5px solid var(--ion-color-secondary);
+    ul{
+        li::marker {
+            color: var(--ion-color-secondary);            
+        }
+    }
+  }
+  .tier-card.pro {
+    border: 1.5px solid var(--ion-color-tertiary);
+    ul{
+        li::marker {
+            color: var(--ion-color-tertiary);            
+        }
+    }
+  }
+  .tier-card.business {
+    border: 1.5px solid var(--ion-color-success);
+    ul{
+        li::marker {
+            color: var(--ion-color-success);            
+        }
+    }
+  }
+  .tier-card.enterprise {
+    border: 1.5px solid var(--ion-color-dark);
+    &ul{
+        li::marker {
+            color: var(--ion-color-dark);            
+        }
+    }
+  }
+  .top{
+    display: flex;
+    flex-direction: row;
+  }

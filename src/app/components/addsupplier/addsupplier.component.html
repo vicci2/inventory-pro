@@ -1,0 +1,74 @@
+<ion-content [fullscreen]="true" class="ion-padding ion-justify-content-center ion-align-items-center">
+  <ion-toolbar class="toolbar">
+    <ion-title>
+      Create New Supplier
+      <ion-card-subtitle>Add a New Supplier to the System</ion-card-subtitle>
+    </ion-title>
+    <ion-buttons slot="end" class="backButton">
+      <ion-button (click)="goBack()" fill="clear" class="menu">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="outline" color="dark" size="small" shape="round" slot="start" [disabled]="true">
+        <ion-icon name="cloud-upload-outline"></ion-icon>
+        Bulk
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-grid>
+    <section>
+      <ion-row class="ion-justify-content-center ion-align-items-center">
+        <ion-col size-md="10" size-lg="8">
+          <form [formGroup]="supplierForm" (ngSubmit)="onSubmit()">
+            <!-- Supplier Name -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-input label="Supplier Name *" label-placement="floating" fill="outline" type="text" placeholder="Enter Supplier Name" formControlName="name"  [errorText]="validationService.getErrorMessage(supplierForm.get('name'))">
+                  <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-justify-content-center ion-align-items-center ion-padding-horizontal">
+              <!-- Supplier Email -->
+              <ion-col size="12" sizeMd="5" sizeSm="5">
+                <ion-input label="Email *" label-placement="floating" fill="outline" type="email" placeholder="Enter Email Address" formControlName="email" [errorText]="validationService.getErrorMessage(supplierForm.get('email'))">
+                  <ion-icon slot="start" name="mail-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+              
+              <!-- Supplier Phone Number -->
+              <ion-col size="12" sizeSm="5" sizeMd="5">
+                <ion-input label="Phone Number" label-placement="floating" fill="outline" type="tel" placeholder="e.g., +1 555-123-4567" formControlName="tel_no" [errorText]="validationService.getErrorMessage(supplierForm.get('tel_no'))">
+                  <ion-icon slot="start" name="call-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+
+            <!-- Supplier Address -->
+            <ion-row class="ion-padding">
+              <ion-col size="12">
+                <ion-input label="Address" label-placement="floating" fill="outline" type="text" placeholder="e.g., 123 Main St., Apt #4" formControlName="address" [errorText]="validationService.getErrorMessage(supplierForm.get('address'))">
+                  <ion-icon slot="start" name="home-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+        
+            <ion-buttons class="ion-margin ion-justify-content-evenly">               
+              <!-- Reset Button -->
+              <ion-button color="primary" shape="round" fill="clear" (click)="supplierForm.reset()" [disabled]="supplierForm.pristine">
+                <ion-icon slot="start" name="refresh-circle"></ion-icon> Reset
+              </ion-button>              
+
+              <!-- Create Supplier Button -->
+              <ion-button color="primary" shape="round" type="submit" [disabled]="supplierForm.invalid">
+                <ion-icon slot="end" name="person-add-outline"></ion-icon>
+                Create Supplier
+              </ion-button>             
+            </ion-buttons>
+          </form>
+        </ion-col>
+      </ion-row>
+    </section>
+  </ion-grid>
+</ion-content>

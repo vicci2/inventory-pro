@@ -1,0 +1,32 @@
+ion-card {
+    border-radius: 12px;
+    text-align: left;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    &:hover{transform: scale(1.01);}
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+  }
+  
+  .cost {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  
+  .growth {
+    font-size: 0.9rem;
+    color: gray;
+    //    color: #72e9c5;
+  }
+  
+  .optimal, .low, .negative{
+    color: var(--ion-color-medium);
+  }
+
+  
+  

@@ -1,0 +1,165 @@
+<ion-content>
+  <ion-grid>
+    <!-- AnalytiCards -->
+    <ion-list lines="none" class="section-title-wrap">
+      <ion-chip class="section-title">Analytic cards</ion-chip>
+    </ion-list>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="3" sizeMd="3" sizeSm="4" sizeLg="2" sizeXs="6" *ngFor="let metric of metrics">
+        <app-widgits [metric]="metric"></app-widgits>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-button (click)="openModal()">Open Modal</ion-button> -->
+
+    <!-- Quick Actions -->
+    <ion-list lines="none" class="section-title-wrap">
+      <ion-chip class="section-title">Quick Actions</ion-chip>
+    </ion-list>
+    
+    <ion-row class="ion-text-center ion-justify-content-center ion-align-items-center">
+      <!-- Add New Item -->
+      <ion-col sizeMd="1.7" sizeSm="3" sizeXs="4" class="ion-margin-bottom">
+        <ion-button expand="block" fill="outline" color="primary" [routerLink]="['/stock/create']">
+          <ion-icon slot="start" name="add-circle"></ion-icon>
+          <small>
+            Add New Item
+          </small>
+        </ion-button>
+      </ion-col>
+    
+      <!-- Stock Overview -->
+      <!-- <ion-col sizeMd="1.7" sizeSm="3" sizeXs="4" class="ion-margin-bottom">
+        <ion-button expand="block" fill="outline" color="secondary">
+          <ion-icon slot="start" name="cube-outline"></ion-icon>
+          <small>Stock Overview</small>
+        </ion-button>
+      </ion-col> -->
+    
+      <!-- Orders History -->
+      <!-- <ion-col sizeMd="1.7" sizeSm="3" sizeXs="4" class="ion-margin-bottom">
+        <ion-button expand="block" fill="outline" color="tertiary">
+          <ion-icon slot="start" name="receipt-outline"></ion-icon>
+          <small>Orders History</small>
+        </ion-button>
+      </ion-col> -->
+    
+      <!-- Inventory Movement -->
+      <ion-col sizeMd="1.7" sizeSm="3" sizeXs="4" class="ion-margin-bottom">
+        <ion-button expand="block" fill="outline" color="dark">
+          <ion-icon slot="start" name="arrow-forward-outline"></ion-icon>
+          <small>Inventory Movement</small>
+        </ion-button>
+      </ion-col>
+    
+      <!-- Suppliers -->
+      <ion-col sizeMd="1.7" sizeSm="3" sizeXs="4" class="ion-margin-bottom">
+        <ion-button expand="block" fill="outline" color="warning" [routerLink]="['/suppliers/create']">
+          <ion-icon slot="start" name="person-add-outline"></ion-icon>
+          <small>Supplier</small>
+        </ion-button>
+      </ion-col>
+      
+      <!-- Settings -->
+      <ion-col sizeMd="1.7" sizeSm="3" sizeXs="4" class="ion-margin-bottom">
+        <ion-button expand="block" fill="outline" color="medium">
+          <ion-icon slot="start" name="settings-outline"></ion-icon>
+          <small>Settings</small>
+        </ion-button>
+      </ion-col>
+    
+      <!-- Bulk Import/Export -->
+      <!-- <ion-col sizeMd="1.7" sizeSm="3" sizeXs="4" class="ion-margin-bottom">
+        <ion-button expand="block" fill="outline" color="success">
+          <ion-icon slot="start" name="cloud-upload-outline"></ion-icon>
+          <small>Bulk Import/Export</small>
+        </ion-button>
+      </ion-col> -->
+    
+      <!-- <ion-col sizeMd="1.7" sizeSm="3" sizeXs="4" class="ion-margin-bottom">
+        <ion-button (click)="toggleView()">Toggle View</ion-button>
+      </ion-col> -->
+    </ion-row>
+
+    <ion-row>
+      <!-- Overview Tables -->
+      <!-- <ion-col size="12" sizeLg="7">
+        <ion-list lines="none" class="section-title-wrap">
+          <ion-chip class="section-title">Recently Added</ion-chip>
+        </ion-list> 
+        <ion-card> -->
+          <!-- <ion-toolbar>
+            <ion-title>Product Inventory<ion-card-subtitle>Add a New User to the System</ion-card-subtitle></ion-title>
+            <ion-buttons slot="end">
+              <ion-button>
+                <ion-icon slot="icon-only" name="filter"></ion-icon>
+              </ion-button>
+              <ion-button>
+                <ion-icon slot="icon-only" name="download"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar> -->
+          
+            <!-- <ion-list>
+              <ion-item *ngFor="let product of products">
+                <ion-thumbnail slot="start">
+                  <img [src]="product.image || 'assets/images/default.jpg'" (error)="handleImageError($event)"/>
+                </ion-thumbnail>
+                <ion-label>
+                  <h2>{{ product.name }}</h2>
+                  <p>ID: {{ product.id }}</p>
+                  <p>Category: <ion-chip>{{ product.category }}</ion-chip></p>
+                  <p>Price: Ksh{{ product.price }}</p>
+                  <p>SKU: {{ product.sku }}</p>
+                  <p>Supplier: {{ product.supplier }}</p>
+                  <p>Last Restock: {{ product.restockDate }}</p>
+                </ion-label>
+                <ion-badge [color]="getAvailabilityColor(product.inStore)">{{ product.inStore }} PCS</ion-badge>
+                <ion-badge [color]="getAvailabilityColor(product.online)">{{ product.online }} PCS</ion-badge>
+              </ion-item>
+            </ion-list>
+          
+            <ion-buttons>
+              <ion-button>Prev</ion-button>
+              <ion-button>1</ion-button>
+              <ion-button>2</ion-button>
+              <ion-button>3</ion-button>
+              <ion-button>Next</ion-button>
+            </ion-buttons> -->
+
+            <!-- <ngx-datatable #table class="material" [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="40"
+            [rowHeight]="48" [loadingIndicator]="loadingIndicator"
+            [scrollbarH]="true" [limit]="5" [rows]="products">
+            <ngx-datatable-column prop="id">
+              <ng-template
+                let-column="column"
+                ngx-datatable-header-template
+                let-sort="sortFn"
+              >
+                <span class="tableHeader">ID</span>
+              </ng-template>
+            </ngx-datatable-column>
+            </ngx-datatable> -->
+        <!-- </ion-card>
+      </ion-col> -->
+      <!-- Best Selling Section -->
+      <ion-col size="12" *ngIf="top10Sales.length > 0">  
+        <ion-list lines="none" class="section-title-wrap">
+          <ion-chip class="section-title">Top Selling</ion-chip>
+        </ion-list>  
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+          <ion-col sizeXl="2" sizeLg="3" sizeMd="3" sizeSm="3" sizeXs="4" *ngFor="let item of top10Sales  | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" (click)="openDetailModal(item)">
+            <ion-card-header class="ion-justify-content-center ion-align-items-center">
+              <div>
+                <ion-avatar>
+                  <img [src]="item.image || 'assets/images/default.jpg'" (error)="handleImageError($event)" alt="Inventory Item" class="card-image">
+                </ion-avatar>
+              </div>
+              <ion-card-subtitle>{{ item.product_name }}</ion-card-subtitle>
+            </ion-card-header>
+          </ion-col>
+        </ion-row> 
+    </ion-col>
+  </ion-row>
+  </ion-grid>
+</ion-content>

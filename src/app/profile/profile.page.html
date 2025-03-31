@@ -1,0 +1,208 @@
+<ion-content class="ion-padding">
+  <ion-toolbar class="toolbar">
+    <ion-title>
+      Welcome to {{companyData?.name}} ({{userData?.role}}'s panel) 
+      <ion-card-subtitle>{{ userData?.username}}</ion-card-subtitle>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goBack()" fill="clear" class="menu">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-row class="ion-justify-content-center ion-align-items-center">
+    <ion-col size="6">
+      <div class="segments">
+        <ion-list lines="none" class="section-title-wrap">
+          <ion-chip 
+            class="section-title" 
+            [class.active]="section === 'company'" 
+            (click)="onSegmentChange('company')">
+            Company
+          </ion-chip>
+      
+          <ion-chip 
+            class="section-title" 
+            [class.active]="section === 'user'" 
+            (click)="onSegmentChange('user')">
+            {{ userData?.username }}
+          </ion-chip>
+        </ion-list>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-grid>
+    <ng-container *ngIf="userData?.role === 'admin' || userData?.role === 'manager'">
+      
+      <!-- Company Profile --> 
+      <section *ngIf="section === 'company'">
+        <!-- <ion-card-header>
+          <div  class="cover-image">
+            <ion-card-subtitle><span class="subtitle">Address:</span> Kenyatta Avenue</ion-card-subtitle>
+            <ion-card-subtitle><span class="subtitle">City:</span> Nairobi</ion-card-subtitle>
+            <ion-card-subtitle><span class="subtitle">County:</span> Nairobi</ion-card-subtitle>
+            <ion-card-subtitle><span class="subtitle">Postal Code:</span> 20100</ion-card-subtitle>
+          </div>      
+        </ion-card-header>     -->
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+          <ion-col size="6" sizeMd="6" sizeSm="6" sizeXs="12">
+            <div class="profile-info">
+              <ion-avatar>
+                <img src="assets/images/bg6.jpg" alt="User Avatar" />
+              </ion-avatar>
+              <ion-card-title class="user-details">
+                {{companyData?.name}}
+                <ion-card-subtitle>{{companyData?.location}}</ion-card-subtitle>
+              <!-- <ion-card-subtitle>{{userData?.address}}</ion-card-subtitle> -->
+              </ion-card-title>
+            </div>
+          </ion-col>
+          <ion-col size="5" sizeMd="5" sizeSm="5" sizeXs="12">
+            <div class="social-buttons">
+              <ion-button fill="outline"  title="Whatsapp">
+                <ion-icon name="logo-whatsapp" slot="icon-only"></ion-icon>
+              </ion-button>
+              <ion-button fill="outline"  title="Facebook">
+                <ion-icon name="logo-facebook" slot="icon-only"></ion-icon></ion-button>
+                <ion-button fill="outline" title="Website">
+                  <ion-icon name="globe-outline" slot="icon-only"></ion-icon>
+                </ion-button>            
+              <ion-button fill="outline"  title="Call">
+                <ion-icon name="call-outline" slot="icon-only"></ion-icon></ion-button>
+              <ion-button fill="outline"  title="Email">
+                <ion-icon name="mail-outline" slot="icon-only"></ion-icon></ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+        <!-- <ion-card>
+          <ion-toolbar>
+            <ion-title>Branches</ion-title>
+            <ion-button slot="end" fill="outline" size="small" >Add Branch
+            </ion-button>         
+          </ion-toolbar>
+        </ion-card> -->
+        <!-- <ion-card class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th class="header"><strong>Name</strong></th>
+                <th class="header"><strong>Manager</strong></th>
+                <th class="header"><strong>Location</strong></th>
+                <th class="header"><strong>Contact</strong></th>
+                <th class="header"><strong>Actions</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let branch of branches">
+                <td>{{ branch.name }}</td>
+                <td>{{ branch.manager }}</td>
+                <td>{{ branch.location }}</td>
+                <td>{{ branch.contact }}</td>
+                <td class="action-buttons">
+                  <ion-button fill="clear" shape="round" title="Edit">
+                    <ion-icon name="create-outline"></ion-icon>
+                  </ion-button>
+                  <ion-button fill="clear" shape="round" title="Delete">
+                    <ion-icon name="trash-outline"></ion-icon>
+                  </ion-button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-card> -->
+        
+        <app-subscription></app-subscription>
+        
+        <ion-row class="ion-justify-content-evenly ion-align-items-center" id="subscription">
+          <ion-col size="auto">
+            <fieldset class="ion-justify-content-between ion-padding-horizontal ion-margin">
+              <legend class="ion-text-center">Organization Documents</legend>
+              <ion-buttons class="ion-justify-content-center ion-align-items-center">
+                <ion-button fill="clear" shape="round" title="License">
+                  <ion-icon name="document-text-outline"></ion-icon>
+                </ion-button>      
+              
+                <ion-button fill="clear" shape="round" title="Privacy Policy">
+                  <ion-icon name="shield-checkmark-outline"></ion-icon>
+                </ion-button>
+              
+                <ion-button fill="clear" shape="round" title="Terms of Service">
+                  <ion-icon name="reader-outline"></ion-icon>
+                </ion-button>
+              
+                <ion-button fill="clear" shape="round" title="User Agreement">
+                  <ion-icon name="document-lock-outline"></ion-icon>
+                </ion-button>
+              
+                <ion-button fill="clear" shape="round" title="View Registration">
+                  <ion-icon name="briefcase-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>   
+            </fieldset>
+          </ion-col>
+        </ion-row>
+        
+      </section>
+
+      <!-- User Profile -->
+      <section *ngIf="section === 'user'">
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+          <ion-col size="10" size-md="8" size-lg="6">
+            <ion-card class="ion-padding ion-margin profile-card">
+              <div class="profile-image-container">
+                <img src="assets/images/bg6.jpg" alt="Profile Image" class="profile-image">
+              </div>
+              <ion-list lines="none" class="section-title-wrap">
+                <ion-chip class="section-title">{{userData?.fullName}}</ion-chip>
+              </ion-list>
+      
+              <p class="ion-text-center ion-margin-top">
+                <ion-icon name="briefcase-outline" class="icon"></ion-icon> What you do: {{userData?.role}}
+              </p>
+              <ion-card-subtitle class="ion-text-left"><span class="subtitle">Postal Code:</span> {{userData?.address}}</ion-card-subtitle>
+      
+              <p class="ion-text-center ion-margin-top">
+                <ion-icon name="location" class="icon"></ion-icon> Your Location - 25.0000° N, 71.0000° W
+              </p>
+      
+              <p class="ion-text-center ion-margin-top">
+                Totally optional short description about yourself, what you do, and so on.
+              </p>
+            </ion-card>
+          </ion-col>
+        </ion-row> 
+      </section>
+    </ng-container>
+  
+     <!-- User Profile -->
+  <ng-template *ngIf="userData?.role === 'staff' || userData?.role === 'user'">
+      <section>
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+          <ion-col size="10" size-md="8" size-lg="6">
+            <ion-card class="ion-padding ion-margin profile-card">
+              <div class="profile-image-container">
+                <img src="assets/images/bg6.jpg" alt="Profile Image" class="profile-image">
+              </div>
+              <ion-list lines="none" class="section-title-wrap">
+                <ion-chip class="section-title">{{userData?.fullName}}</ion-chip>
+              </ion-list>
+      
+              <p class="ion-text-center ion-margin-top">
+                <ion-icon name="briefcase-outline" class="icon"></ion-icon> What you do: {{userData?.role}}
+              </p>
+              <ion-card-subtitle class="ion-text-left"><span class="subtitle">Postal Code:</span> {{userData?.address}}</ion-card-subtitle>
+      
+              <p class="ion-text-center ion-margin-top">
+                <ion-icon name="location" class="icon"></ion-icon> Your Location - 25.0000° N, 71.0000° W
+              </p>
+      
+              <p class="ion-text-center ion-margin-top">
+                Totally optional short description about yourself, what you do, and so on.
+              </p>
+            </ion-card>
+          </ion-col>
+        </ion-row> 
+      </section>
+  </ng-template>
+  </ion-grid>
+</ion-content>

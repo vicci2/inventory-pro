@@ -1,0 +1,32 @@
+<ion-grid>
+  <ion-row class="ion-justify-content-evenly ion-padding-horizontal ion-margin-horizontal">
+    <ion-searchbar
+      [(ngModel)]="searchQuery"
+      (ionInput)="filterData()"
+      show-clear-button="focus"
+      clear-icon="trash-bin"
+      placeholder="Search">
+    </ion-searchbar>
+  </ion-row>
+
+  <!-- Show feedback messages -->
+  <ion-row class="ion-justify-content-center ion-align-content-center">
+    <ion-col size="12" *ngIf="filteredData.length === 0 && data.length > 0 && searchQuery!=''" class="ion-text-center no-results-container">
+      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+      <h2>No {{ entityType }} found</h2>
+      <p>Your search "{{ searchQuery }}" did not match any {{ entityType }}.</p>
+      <p>Please try again or create a new {{ entityType }}.</p>
+
+      <ion-list *ngIf="relatedResults.length">
+        <ion-item *ngFor="let item of relatedResults" (click)="selectSuggestion(item)">
+          {{ item[displayKey] }}
+        </ion-item>
+      </ion-list>
+
+      <ion-buttons  class="ion-justify-content-evenly">
+        <ion-button fill="outline" shape="round" (click)="clearSearch()">Clear Search</ion-button>
+        <ion-button shape="round" (click)="addNewEntity()">Add {{ entityType }}</ion-button>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>
+</ion-grid>

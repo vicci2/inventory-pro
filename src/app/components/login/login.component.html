@@ -1,0 +1,77 @@
+<ion-content>
+  <ion-row class="ion-justify-content-center ion-align-items-center">
+    <ion-col size-md="8" size-lg="6">
+      <ion-row class="ion-justify-content-evenly ion-padding-horizontal">
+        <ion-title color="primary">Login</ion-title>
+        <ion-button fill="clear" (click)="changeLogintype()">
+          <ion-icon [name]="mail ? 'mail' : 'person-circle'"></ion-icon>                            
+        </ion-button>
+      </ion-row>
+      <section>
+        <app-toast  *ngIf="showToast"
+        [type]="toastType" 
+        [title]="toastTitle" 
+        [message]="toastMessage">
+      </app-toast>
+        <ion-card-content>
+          <form [formGroup]="logForm" (ngSubmit)="login(logForm)">
+            <div class="ion-padding">
+              <ion-input formControlName="username"
+              [label]="mail ? 'Email Address' : 'Username'" [type]="mail ? 'email' : 'text'"
+              label-placement="floating" [errorText]="mail ? 'Enter a proper email address' : 'Enter a proper username'"
+              fill="outline" placeholder="Enter your username">
+              <ion-icon slot="start" [name]="mail ? 'mail' : 'person-circle'" color="primary"></ion-icon>
+            </ion-input>
+            </div>
+
+            <div class="ion-padding">
+              <ion-input formControlName="password"
+              label="Password"
+              label-placement="floating"
+              fill="outline" [type]="hide ? 'password' : 'text'"
+              [errorText]="logForm.get('password')?.hasError('minlength') ? 'Password MUST be at least 8 characters long' : 'Enter a proper password'"
+              placeholder="Enter Your Password"
+                fill="outline" placeholder="Enter your paassword">
+                <ion-icon slot="start" [name]="hide ? 'lock-closed-outline' : 'lock-open-outline'" color="primary" (click)="togglePasswordVisibility()"></ion-icon>
+              </ion-input>
+            </div>
+            
+            <!-- Submit button -->
+            <ion-buttons class="ion-margin ion-justify-content-evenly">
+              <ion-button color="primary" slot="start" fill="clear" shape="round" type="submit" [disabled]="!logForm.valid">
+                <ion-icon slot="end" name="log-in-sharp"></ion-icon>
+                Login
+              </ion-button>
+              <ion-button color="primary" slot="end" shape="round" fill="clear" [disabled]="logForm.pristine" type="Reset" (click)="logForm.reset()">
+                <ion-icon slot="start" name="refresh-circle"></ion-icon>
+                Reset
+              </ion-button>                
+            </ion-buttons>
+          </form>
+          <ion-label class="ion-text-wrap">
+            <p class="forgotPas ion-text-center ion-margin" id="forgotPass">Forgot Password</p>
+            <p class="alt">Don't have an account? <span class="span"  (click)="signUp()">Sign Up</span></p>
+          </ion-label>
+          
+          <ion-alert
+            trigger="forgotPass"
+            header="Enter your Email Address"
+            [buttons]="alertButtons"
+            [inputs]="alertInputs"
+            mode="ios"
+          ></ion-alert>
+        
+          <ion-list lines="none" class="section-title-wrap ion-text-center">
+            <ion-chip class="section-title">OR</ion-chip>
+          </ion-list>
+        
+          <ion-row class="ion-justify-content-center">
+            <ion-button fill="clear" shape="round" class="ion-text-wrap ion-margin">
+              <ion-img src="assets/google.png" alt="Google Logo" slot="icon-only"></ion-img>
+            </ion-button>
+          </ion-row>
+        </ion-card-content>
+      </section>
+      </ion-col>
+    </ion-row>
+</ion-content>

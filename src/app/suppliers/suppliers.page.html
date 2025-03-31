@@ -1,0 +1,53 @@
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-evenly ion-padding-horizontal ion-margin-horizontal">
+      <ion-col size="8">
+        <app-search-filter [data]="teams" [searchKey]="'name'" (filteredResults)="teams = $event"></app-search-filter>
+      </ion-col>
+      <ion-col size="4" class="ion-justify-content-evenly ion-align-content-center ion-padding">
+        <ion-button fill="clear" [routerLink]="['/suppliers/create']">
+          <ion-icon slot="start" name="person-add-outline" color="primary"></ion-icon>Supplier
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="12" sizeMd="3" sizeLg="2" sizeSm="4" sizeXs="6"  *ngFor="let member of userData">
+        <ion-card>
+          <ion-card-content>
+            <div class="img">
+              <img [src]="member.image" alt="{{ member.name }}" (error)="handleImageError($event)"/>
+            </div>
+            <div class="ion-text-center ion-text-muted small ion-text-bold">
+              <ion-card-subtitle><strong>{{ member.name }}</strong>
+              </ion-card-subtitle>
+              <ion-note>
+                <ion-icon name="mail" size="small"></ion-icon>
+                {{ member.email | lowercase }}
+              </ion-note>
+              <p class="role">
+                <ion-icon name="locate-outline" size="small"></ion-icon>
+                <small> {{ member.address | titlecase }}</small>
+              </p>
+              <!-- 
+                     <ion-item lines="none">
+                <ion-icon  name="locate-outline"class="mr-2"></ion-icon>
+                <ion-note class="ion-text-center ion-text-muted small ion-text-bold">
+                  {{ member.address | titlecase }}                 
+                </ion-note>
+              </ion-item>
+              -->
+              <ion-buttons  class="ion-justify-content-center"> 
+                <ion-button fill="clear" shape="round" [routerLink]="['/userEdit']">
+                  <ion-icon name="create-sharp"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" shape="round" (click)="openModal()">
+                  <ion-icon name="person-remove-sharp"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </div>            
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

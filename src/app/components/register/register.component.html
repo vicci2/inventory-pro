@@ -1,0 +1,229 @@
+<ion-content>
+  <!-- Reg Wizard -->
+ <Section *ngIf="selectedPlan; else noPlanTemplate">
+     <ion-row class="ion-justify-content-center">
+       <ion-col size-md="8" size-lg="6">
+        
+      <ion-card-header>
+        <ion-title class="ion-text-center"><h1>Get started with InventoryPro</h1>
+          <ion-card-subtitle>Start your experience for free. Upgrade for extra features and collaboration with your team...</ion-card-subtitle>
+        </ion-title>
+      </ion-card-header>
+      
+      <ion-row class="ion-justify-content-center ion-padding">
+          <ion-title color="primary">
+            {{ currentStep === 1 ? 'Register Your Business' : 
+               currentStep === 2 ? 'Register Business Owner' : 
+               currentStep === 3 ? 'Final Step ( OPTINAL )' : '' }}
+          </ion-title>
+          <ion-button fill="outline" (click)="goBack()">
+           <ion-icon name="home" slot="icon-only"></ion-icon>
+          </ion-button>
+      </ion-row>
+      
+      <ion-row lines="none" class="ion-justify-content-evenly step-indicator ion-padding">
+        <!-- Step 1: Business Registration -->
+        <ion-chip [class.active]="currentStep === 1">
+          <ion-icon name="business-outline"></ion-icon>
+          <ion-label>Business</ion-label>
+        </ion-chip>
+
+        <!-- Step 2: Business Owner Registration -->
+        <ion-chip [class.active]="currentStep === 2">
+          <ion-icon name="person-outline"></ion-icon>
+          <ion-label>Owner</ion-label>
+        </ion-chip>         
+      
+        <!-- Step 3: Final Step -->
+        <!-- <ion-chip [class.active]="currentStep === 3">
+          <ion-icon name="person-add-outline"></ion-icon>
+          <ion-label>User</ion-label>
+        </ion-chip> -->
+      </ion-row>  
+
+      <ion-card-content>
+       <ion-title  color="primary">{{selectedPlan.name}} Plan at Ksh{{selectedPlan.yearlyPrice}}</ion-title>
+       <app-toast  *ngIf="showToast"
+       [type]="toastType" 
+       [title]="toastTitle" 
+       [message]="toastMessage">
+     </app-toast>
+       <!-- Company registration -->
+       <section *ngIf="currentStep === 1">
+         <form [formGroup]="form">               
+
+            <!-- Company Name -->
+            <div class="ion-padding">
+              <ion-input formControlName="companyName"
+                label="Company Name"
+                label-placement="floating"
+                fill="outline" [errorText]="validationService.getErrorMessage(form.get('companyName'))" placeholder="Enter company name">
+                <ion-icon slot="end" name="business" color="primary"></ion-icon>
+              </ion-input>
+            </div>
+      
+            <!-- Phone Number -->
+            <div class="ion-padding">
+             <ion-input formControlName="phone"
+               label="Phone Number"
+               label-placement="floating"
+               fill="outline"
+               type="tel" [errorText]="validationService.getErrorMessage(form.get('phone'))" placeholder="Enter phone number">
+               <ion-icon slot="end" name="call" color="primary"></ion-icon>
+             </ion-input>       
+            </div>
+      
+            <!-- Email -->
+            <div class="ion-padding">
+              <ion-input formControlName="email"
+                label="Email"
+                label-placement="floating"
+                fill="outline"
+                type="email" [errorText]="validationService.getErrorMessage(form.get('email'))"
+                placeholder="Eg. support@thinkit.mail.kom">
+                <ion-icon slot="end" name="mail" color="primary"></ion-icon>
+              </ion-input>
+            </div>
+
+            <ion-popover [isOpen]="isPopoverOpen" [backdropDismiss]="false" (ionPopoverDidDismiss)="isPopoverOpen = true">
+              <ng-template>
+                <form [formGroup]="subscriptionForm" class="ion-padding"  (ngSubmit)="subscribe()">
+                  <ion-input formControlName="transaction_code"                  label="Transaction Code" label-placement="floating"
+                  fill="outline" type="text" [errorText]="validationService.getErrorMessage(subscriptionForm.get('transaction_code'))" placeholder="Enter Code">
+                  <ion-icon slot="end" name="key" color="primary"></ion-icon>
+                </ion-input>      
+                <ion-button expand="full" shape="round" fill="outline" type="submit" [disabled]="!subscriptionForm.valid">Subscribe</ion-button>
+                </form>
+              </ng-template>
+            </ion-popover>
+         </form>
+       </section>
+       
+       <!-- User Registration -->
+       <section *ngIf="currentStep === 2">
+         <form [formGroup]="OwnerForm">
+           
+           <div class="ion-padding">
+            <ion-input label="First Name" label-placement="floating" fill="outline" placeholder="Enter first name" type="text" formControlName="fullName" [errorText]="validationService.getErrorMessage(OwnerForm.get('fullName'))" >
+              <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>
+            </ion-input>
+           </div>
+
+           <ion-row class="ion-padding">
+            <ion-col size="6">
+              <ion-input label="Email Address" label-placement="floating" fill="outline" type="email" placeholder="Eg. info@thinkit.mail.kom" formControlName="email" [errorText]="validationService.getErrorMessage(OwnerForm.get('email'))" >
+                <ion-icon slot="start" name="mail" color="primary"></ion-icon>
+              </ion-input>                
+            </ion-col>
+      
+            <ion-col size="6">
+              <ion-input label="Phone Number" label-placement="floating" fill="outline" type="tel" placeholder="Enter your phone number" formControlName="tel_no" [errorText]="validationService.getErrorMessage(OwnerForm.get('tel_no'))" >
+                <ion-icon slot="start" name="call" color="primary"></ion-icon>
+              </ion-input>
+            </ion-col>
+          </ion-row>
+      
+          <ion-row class="ion-padding">
+            <ion-col size="6">
+              <ion-input label="Password" label-placement="floating" fill="outline" placeholder="Enter your password" [type]="hide ? 'password' : 'text'" formControlName="password" [errorText]="validationService.getErrorMessage(OwnerForm.get('password'))">
+                <ion-icon slot="start"[name]="hide ? 'lock-closed-outline' : 'lock-open-outline'" (click)="togglePasswordVisibility()" color="primary"></ion-icon>
+              </ion-input>
+            </ion-col>
+      
+            <ion-col size="6">
+              <ion-input label="Confirm Password" label-placement="floating" fill="outline" placeholder="Confirm entered password" [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" [errorText]="validationService.getErrorMessage(OwnerForm.get('confirmPassword'))">
+                <ion-icon slot="start" [name]="hide ? 'lock-closed-outline' : 'lock-open-outline'" (click)="togglePasswordVisibility()" color="primary"></ion-icon>
+              </ion-input>
+            </ion-col>
+          </ion-row>
+        </form>
+       </section>             
+       
+       <!-- registration files-->
+       <section *ngIf="currentStep === 3">
+         <form [formGroup]="OwnerForm">
+           <ion-row class="ion-padding">
+             <ion-col size="6">
+               <ion-input label="First Name" label-placement="floating" fill="outline" placeholder="Enter first name" type="text" formControlName="name">
+                 <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>
+               </ion-input>
+             </ion-col>
+       
+             <ion-col size="6">
+               <ion-input label="Last Name" label-placement="floating" fill="outline"   placeholder="Enter last name" type="text" formControlName="last_name">
+                 <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>
+               </ion-input>
+             </ion-col>
+           </ion-row>
+
+           <div class="ion-padding">
+             <ion-input label="Email Address" label-placement="floating" fill="outline" type="email" placeholder="Enter your email address" formControlName="email">
+               <ion-icon slot="start" name="mail" color="primary"></ion-icon>
+             </ion-input>
+           </div>
+
+           <div class="ion-padding">
+             <ion-input label="Company ID" label-placement="floating" fill="outline" type="text" formControlName="company_id" readonly>
+               <ion-icon slot="start" name="business" color="primary"></ion-icon>
+             </ion-input>
+           </div>
+
+           <div class="ion-padding">
+             <ion-input label="Phone Number" label-placement="floating" fill="outline" type="tel" placeholder="Enter your phone number" formControlName="tel_no">
+               <ion-icon slot="start" name="call" color="primary"></ion-icon>
+             </ion-input>
+           </div>
+
+           <div class="ion-padding">
+             <!-- User Role Selection -->
+             <ion-list lines="none">
+               <ion-item>
+                 <ion-select formControlName="role"  placeholder="Select user's role:" interface="popover" mode="ios">
+                   <ion-select-option value="manager">Manager</ion-select-option>
+                   <ion-select-option value="supplier">Supplier</ion-select-option>
+                   <ion-select-option value="staff">Staff</ion-select-option>
+                 </ion-select>
+               </ion-item>
+             </ion-list>
+           </div>
+           
+           <ion-row class="ion-padding ion-justify-content-center">
+             <ion-col size="9">
+               <ion-input label="Password" label-placement="floating" fill="outline" placeholder="Enter your password" [type]="hide ? 'password' : 'text'" formControlName="password">
+                 <ion-button type="button" fill="clear" slot="start">
+                   <ion-icon slot="icon-only" [name]="hide ? 'lock-closed-outline' : 'lock-open-outline'" (click)="togglePasswordVisibility()" color="primary"></ion-icon>
+                 </ion-button>
+               </ion-input>
+             </ion-col>
+           </ion-row>
+         </form>
+       </section>
+       
+       <!-- Button Section -->
+       <ion-buttons class="ion-margin ion-justify-content-evenly">                 
+        <ion-button *ngIf="currentStep !== 1" (click)="previousStep()" color="primary" shape="round" fill="outline" type="button">Previous Step</ion-button>
+         <!-- Reset Button -->
+         <ion-button color="primary" shape="round" fill="clear" (click)="form.reset() ; OwnerForm.reset()"  [disabled]="form.pristine && OwnerForm.pristine">
+          <ion-icon slot="start" name="refresh-circle"></ion-icon> Reset
+        </ion-button>              
+         <!-- Sign Up Button -->
+         <ion-button 
+         color="primary" 
+         fill="outline" 
+         shape="round" 
+         type="submit"
+         (click)="nextStep()"
+         [disabled]="currentStep ===1 && form.invalid || currentStep ===2 && OwnerForm.invalid">
+         <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+         {{ currentStep === 2 ? 'Sign Up' : 'Next Step' }}
+       </ion-button>             
+       </ion-buttons>         
+
+      </ion-card-content>
+    </ion-col>
+  </ion-row>
+ </Section>
+ <ng-template #noPlanTemplate>
+  <p>No plan selected. Please choose a plan.</p>
+</ng-template>
+</ion-content>

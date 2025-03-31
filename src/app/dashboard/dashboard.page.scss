@@ -1,0 +1,12 @@
+ion-list.section-title-wrap {
+    display: flex; 
+    justify-content: center;
+    ion-chip.section-title {
+      margin: 0 auto; /* Center the chip */
+    }
+  }
+  .info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

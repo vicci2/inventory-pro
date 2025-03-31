@@ -1,0 +1,153 @@
+<ion-content>  
+  <ion-grid>  
+    <section>
+      <ion-row class="ion-align-items-center ion-justify-content-center hero-section">
+        <ion-col size-md="6" size-xs="12" class="text-content">
+          <h2>Transform Your  <span class="highlight">Inventory Management Experience</span></h2>
+          <p>Streamline your operations, boost efficiency, and make data-driven decisions with our powerful inventory management system.</p>
+          <ion-buttons>
+            <ion-button expand="block" color="secondary" fill="solid" shape="round" (click)="getStarted()">Get Started</ion-button>
+            <ion-button expand="block" color="secondary" fill="outline" shape="round" (click)="freeTrial()">Free Trial</ion-button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col size-md="2" size-xs="12" class="hero-side">
+          <div class="circle">
+            <div class="center">
+              <ion-icon name="shield-checkmark-outline"></ion-icon>
+            </div>
+            <div class="icon top">              
+              <ion-icon name="analytics-outline"></ion-icon>
+            </div>
+            <div class="icon topRight">
+                <ion-icon name="layers-outline"></ion-icon>
+            </div>
+            <div class="icon bottomRight">
+                <ion-icon name="trending-up-outline"></ion-icon>
+            </div>
+            <div class="icon bottom">
+                <ion-icon name="locate-outline"></ion-icon>
+            </div>
+            <div class="icon bottomLeft">
+                <ion-icon name="clipboard-outline"></ion-icon>
+            </div>
+            <div class="icon topLeft">
+                <ion-icon name="git-network-outline"></ion-icon>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <!-- Additional Features Section -->
+      <ion-row class="ion-align-items-center ion-justify-content-center ion-margin">
+        <ion-col size="8" size-md="2.5">
+          <ion-card-header>
+            <ion-card-title class="ion-text-start">
+              <ion-icon name="sparkles-outline" size="large"color="secondary" ></ion-icon>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-title class="ion-text-start">Intuitive, simple & user friendly interface</ion-card-title>
+            <ion-card-subtitle class="ion-text-start">Enjoy a sleek and intuitive interface that puts simplicity first. With a clean, modern design, you'll navigate effortlessly and focus on what matters most.</ion-card-subtitle>
+          </ion-card-content>
+        </ion-col>
+  
+        <ion-col size="8" size-md="2.5">
+          <ion-card-header>
+            <ion-card-title class="ion-text-start">
+              <ion-icon name="desktop-outline" size="large"color="secondary" ></ion-icon>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-title class="ion-text-start">Fully Adaptive for Every Device</ion-card-title>
+            <ion-card-subtitle class="ion-text-start">Whether on mobile, tablet, or desktop, our platform adjust seamlessly to provide the best experience on any screen. Stay connected, wherever you are.</ion-card-subtitle>
+          </ion-card-content>
+        </ion-col>
+  
+        <ion-col size="8" size-md="2.5">
+          <ion-card-header>
+            <ion-card-title class="ion-text-start">
+              <ion-icon name="terminal-outline" size="large"color="secondary" ></ion-icon>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-title class="ion-text-start">No Setup Required - Just Get Started</ion-card-title>
+            <ion-card-subtitle class="ion-text-start">Skip the complexity. With zero configuration needed, you can jump right in and start using the features right away. Simple, fast, and hassle-free.</ion-card-subtitle>
+          </ion-card-content>
+        </ion-col>
+      </ion-row>
+    </section> 
+
+    <!-- <app-hero></app-hero> -->
+    
+    <section class="ion-padding pricing-container">
+
+      <ion-card-header class="ion-text-center">
+        <h1>
+          <ion-title>
+          Start your journey today
+        </ion-title>
+        </h1>
+          <ion-card-subtitle>Start your experience for free. Upgrade for extra features and collaboration with your team.</ion-card-subtitle>
+      </ion-card-header>
+        
+      <ion-segment [(ngModel)]="billingPeriod" class="billing-toggle">
+        <ion-segment-button value="yearly" checked>Yearly</ion-segment-button>
+        <ion-segment-button value="monthly">Monthly</ion-segment-button>
+      </ion-segment>
+      
+      <!-- First row for Free, Standard, and Professional plans -->
+      <ion-row class="pricing-row ion-align-items-center ion-justify-content-center" id="pricing">
+        <ion-col size="12" size-md="6" sizeLg="3" sizeSm="6" *ngFor="let plan of otherPlans">
+          <ion-card class="pricing-card">
+            <ion-card-header>
+              <ion-card-title>{{ plan.name }}</ion-card-title>
+              <ion-card-subtitle>{{ plan.access }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <h2 class="price">{{ billingPeriod === 'yearly' ? plan.yearlyPrice : plan.monthlyPrice }}</h2>
+              <ul class="feature-list">
+                <li *ngFor="let feature of plan.features">✔ {{ feature }}</li>
+              </ul>
+              <ion-button *ngIf="plan.type !== 'Enterprise'" expand="block" color="medium" class="buy-button" (click)="purchasePlan(plan.id)">BUY NOW</ion-button>
+              <ion-button *ngIf="plan.type === 'Enterprise'" expand="block" color="warning" class="contact-button" (click)="contactCompany()">CONTACT US</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      
+      <!-- Second row for Business and Enterprise plans -->
+      <ion-row class="ion-align-items-center ion-justify-content-center">
+        <!-- Show Business plan only for monthly billing -->
+        <ion-col size="12" size-md="8" sizeLg="8" *ngFor="let plan of businessAndEnterprisePlans">
+          <ion-card *ngIf="(billingPeriod === 'monthly' && plan.type === 'Business') || (billingPeriod === 'yearly' && plan.type === 'Enterprise')" class="pricing-card" [ngClass]="{'highlighted': plan.type === 'Business' || plan.type === 'Enterprise'}">
+            <ion-row>
+            
+              <!-- Left side: Header, Price, and Button with divider -->
+              <ion-col size="12" size-md="6" class="left-side">
+                <ion-card-header>
+                  <ion-card-title>{{ plan.name }}</ion-card-title>
+                  <ion-card-subtitle>{{ plan.access }}</ion-card-subtitle>
+                </ion-card-header>
+                
+                <ion-card-content>
+                  <h2 class="price">{{ billingPeriod === 'yearly' ? plan.yearlyPrice : plan.monthlyPrice }}</h2>
+                  <ion-button *ngIf="plan.type !== 'Enterprise'" expand="block" color="warning" class="buy-button" (click)="purchasePlan(plan.id)" fill="outline">BUY NOW</ion-button>
+                  <ion-button *ngIf="plan.type === 'Enterprise'" expand="block" color="warning" class="contact-button" (click)="contactCompany()" fill="outline">CONTACT US</ion-button>
+                </ion-card-content>
+              </ion-col>
+          
+                <!-- Right side: Feature list -->
+                <ion-col size="12" size-md="6">
+                  <ion-list lines="none" class="feature-list">
+                    <ion-item *ngFor="let feature of plan.features">✔ {{ feature }}
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+            </ion-row>
+          </ion-card>      
+        </ion-col>
+      </ion-row>
+    </section>
+
+  </ion-grid>
+</ion-content>

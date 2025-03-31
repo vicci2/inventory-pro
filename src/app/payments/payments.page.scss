@@ -1,0 +1,92 @@
+.img {
+    width: 3rem;
+    height: 3rem;
+    
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      border-radius: 0.4rem;
+    }
+  }
+
+  .product-text {
+    display: flex;
+    flex-direction: column;
+    .product-title {
+      font-weight: 600;
+      font-size: .8rem;
+    }
+    
+    .product-subtitle {
+      font-size: .6rem;
+      color: #666;
+    }
+    
+  }
+  
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      ion-card-title {
+        font-weight: 600;
+        color: var(--ion-color-medium);
+      }
+      ion-card-subtitle {
+        color: #666;
+      }      
+      .header-filters {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+      }
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      .header-actions ion-button {
+        font-weight: 600;
+      }
+    }
+  }
+  
+ion-searchbar {
+width: 250px;
+--background: #f9f9f9;
+--border-radius: 8px;
+}
+  
+  /* For screens smaller than 768px (Tablets & Mobile) */
+  @media screen and (max-width: 768px) {
+    .table-header {
+      flex-direction: column; 
+      align-items: center; 
+      gap: 10px; 
+    }
+  
+    .search-container {
+      width: 100%; /* Make search bar full width */
+    }
+  }
+  
+  /* For very small screens (Mobile Phones) */
+  @media screen and (max-width: 480px) {
+    .button-container {
+      display: flex;
+      flex-direction: column; 
+      gap: 8px; 
+    }
+  }
+  
+  
+  
+  

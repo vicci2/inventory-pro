@@ -3,5 +3,5 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "ionic-angular"
+  "type": "angular-standalone"
 }

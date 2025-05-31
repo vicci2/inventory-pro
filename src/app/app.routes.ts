@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { titleResolver } from './titleResolver';
 
 export const routes: Routes = [
   {
@@ -12,14 +13,17 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+        title: 'Welcome To InventoryPro'
       },
       {
         path: 'register',
-        loadComponent: () => import('./components/register/register.component').then( m => m.RegisterComponent)
+        loadComponent: () => import('./components/register/register.component').then( m => m.RegisterComponent),
+        title: 'Sign Up'
       },
       {
         path: 'login',
-        loadComponent: () => import('./components/login/login.component').then( m => m.LoginComponent)
+        loadComponent: () => import('./components/login/login.component').then( m => m.LoginComponent),
+        title: 'Login'
       },
     ]
   },
@@ -28,40 +32,48 @@ export const routes: Routes = [
     children:[
       {
         path: '',            
-        loadComponent: () => import('./stock/stock.page').then( m => m.StockPage)
+        loadComponent: () => import('./stock/stock.page').then(m => m.StockPage),
+        title: 'In Stock'
       },
       {
         path: 'create',
-        loadComponent: () => import('./components/addproduct/addproduct.component').then(m => m.AddproductComponent)
+        loadComponent: () => import('./components/addproduct/addproduct.component').then(m => m.AddproductComponent),
+        title: 'Add Product'
       },
       {
         path: 'update',
-        loadComponent: () => import('./components/updatestock/updatestock.component').then(m => m.UpdatestockComponent)
+        loadComponent: () => import('./components/updatestock/updatestock.component').then(m => m.UpdatestockComponent),
+        title: 'Update Stock'
       },
     ]
   },
   {
     path: 'product-details/:id',
-    loadComponent: () => import('./product-details/product-details.page').then( m => m.ProductDetailsPage)
+    loadComponent: () => import('./product-details/product-details.page').then( m => m.ProductDetailsPage),
+    title: titleResolver
   },
   {
     path: 'inventory',
-    loadComponent: () => import('./inventory/inventory.page').then( m => m.InventoryPage)
+    loadComponent: () => import('./inventory/inventory.page').then( m => m.InventoryPage),
+    title: "Inventory"
   },
   {
     path: 'sales',
-    loadComponent: () => import('./sales/sales.page').then( m => m.SalesPage)
+    loadComponent: () => import('./sales/sales.page').then( m => m.SalesPage),
+    title: "Sales"
   },
   {
     path: 'team',
     children:[
       {
         path: '',            
-        loadComponent: () => import('./team/team.page').then( m => m.TeamPage)
+        loadComponent: () => import('./team/team.page').then(m => m.TeamPage),
+        title: 'Team Overview'
       },
       {
         path: 'create',
-        loadComponent: () => import('./components/adduser/adduser.component').then(m => m.AdduserComponent)
+        loadComponent: () => import('./components/adduser/adduser.component').then(m => m.AdduserComponent),
+        title: 'Add Team Member'
       },
     ]
   },
@@ -70,28 +82,34 @@ export const routes: Routes = [
     children:[
       {
         path: '',            
-        loadComponent: () => import('./suppliers/suppliers.page').then( m => m.SuppliersPage)
+        loadComponent: () => import('./suppliers/suppliers.page').then(m => m.SuppliersPage),
+        title: 'Suppliers List'
       },
       {
         path: 'create',
-        loadComponent: () => import('./components/addsupplier/addsupplier.component').then(m => m.AddsupplierComponent)
+        loadComponent: () => import('./components/addsupplier/addsupplier.component').then(m => m.AddsupplierComponent),
+        title: 'Add Supplier'
       },
     ]
   },
   {
     path: 'userEdit',
-    loadComponent: () => import('./components/updateuser/updateuser.component').then(m => m.UpdateuserComponent)
+    loadComponent: () => import('./components/updateuser/updateuser.component').then(m => m.UpdateuserComponent),
+    title: 'Edit User'
   },
   {
     path: 'payments',
-    loadComponent: () => import('./payments/payments.page').then( m => m.PaymentsPage)
+    loadComponent: () => import('./payments/payments.page').then(m => m.PaymentsPage),
+    title: 'Payments'
   },
   {
     path: 'profile',
-    loadComponent: () => import('./profile/profile.page').then( m => m.ProfilePage)
+    loadComponent: () => import('./profile/profile.page').then(m => m.ProfilePage),
+    title: 'Profile'
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./dashboard/dashboard.page').then( m => m.DashboardPage)
-  },
+    loadComponent: () => import('./dashboard/dashboard.page').then(m => m.DashboardPage),
+    title: 'Dashboard'
+  },  
 ];
